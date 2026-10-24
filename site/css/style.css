@@ -173,38 +173,6 @@ section{padding:96px 0}
 .step p{color:var(--ink2);font-size:.9rem;line-height:1.85;margin-top:12px}
 .craft-final{text-align:center;margin-top:48px;font-family:var(--serif);font-size:1.3rem;color:var(--ink2)}
 
-/* 八卦环形布局（首页专用） */
-.steps-ring{position:relative;width:760px;max-width:100%;height:760px;margin:0 auto;counter-reset:s;display:block}
-.steps-ring .step{position:absolute;width:160px;min-height:150px;padding:16px 13px 14px;border:1px solid var(--line);border-radius:4px;counter-increment:s;display:flex;flex-direction:column}
-.steps-ring .step:nth-child(1){left:50%;top:14.5%;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(2){left:75%;top:25%;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(3){left:85.5%;top:50%;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(4){left:75%;top:75%;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(5){left:50%;top:85.5%;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(6){left:25%;top:75%;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(7){left:14.5%;top:50%;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(8){left:25%;top:25%;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(1){background:#f7f2e8}
-.steps-ring .step:nth-child(2){background:#f2e9d8}
-.steps-ring .step:nth-child(3){background:#ebdfc8}
-.steps-ring .step:nth-child(4){background:#e2d2b4}
-.steps-ring .step:nth-child(5){background:#d6bf9a}
-.steps-ring .step:nth-child(6){background:#c9ac80}
-.steps-ring .step:nth-child(7){background:#b0542a}
-.steps-ring .step:nth-child(8){background:#c8955a}
-.steps-ring .step:hover{transform:translate(-50%,-50%) scale(1.05);z-index:5;box-shadow:0 22px 44px -24px rgba(31,25,19,.35)}
-.steps-ring .step::before{font-size:2rem;margin-bottom:8px}
-.steps-ring .step h3{font-size:1rem;margin:0 0 8px;padding-bottom:8px;letter-spacing:.04em}
-.steps-ring .step p{font-size:.72rem;line-height:1.5;margin-top:4px}
-.steps-ring .step:nth-child(7) h3,.steps-ring .step:nth-child(7) p{color:#f5ede0}
-.steps-ring .step:nth-child(7) h3{border-color:rgba(245,237,224,.35)}
-.steps-ring .step:nth-child(7)::before{-webkit-text-stroke:1px #f5ede0}
-.steps-ring .step:nth-child(7) h3::after{background:#f5ede0}
-.steps-ring .step:nth-child(8) p{color:#4a3a24}
-.craft-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:240px;height:240px;border-radius:50%;background:var(--dark2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:1px solid var(--accent2);box-shadow:0 24px 60px -24px rgba(31,25,19,.5)}
-.taiji{width:120px;height:120px;border-radius:50%}
-.craft-center-text{color:#d8c9a8;font-family:var(--serif);font-size:.92rem;letter-spacing:.18em;text-align:center;line-height:1.8}
-
 /* ---------- 柴烧知识 ---------- */
 .facts{background:var(--bg2)}
 .facts .sec-head{margin-bottom:48px}
@@ -366,12 +334,6 @@ footer{background:var(--dark2);color:#b7a88c;padding:64px 0 40px;font-size:.88re
   .burger{display:block}
   .vals,.grid,.quote-grid,.steps,.fact-grid{grid-template-columns:1fr}
   .val:nth-child(2),.step:nth-child(3n+2),.fact:nth-child(3n+2),.quote:nth-child(2){margin-top:0}
-  .steps-ring{width:100%;height:auto;display:flex;flex-direction:column;gap:14px}
-  .steps-ring .step{position:relative;left:auto;top:auto;transform:none;width:100%;padding:20px 20px 18px}
-  .steps-ring .step:nth-child(n){left:auto;top:auto;transform:none}
-  .steps-ring .step:hover{transform:none}
-  .craft-center{position:relative;left:auto;top:auto;transform:none;width:150px;margin:10px auto 0}
-  .taiji{width:76px;height:76px}
   .shop .grid{grid-template-columns:1fr 1fr;gap:14px}
   .shop .card-body{padding:14px 14px 16px}
   .shop .card h3{font-size:1rem}
