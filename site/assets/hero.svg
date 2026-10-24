@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <linearGradient id="hbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#151a13"/>
+      <stop offset="0.55" stop-color="#22291e"/>
+      <stop offset="1" stop-color="#303a28"/>
+    </linearGradient>
+    <radialGradient id="fireglow" cx="0.5" cy="0.85" r="0.6">
+      <stop offset="0" stop-color="#ad5f47" stop-opacity="0.75"/>
+      <stop offset="0.4" stop-color="#8f4a35" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#8f4a35" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ember" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e0b18a"/>
+      <stop offset="0.5" stop-color="#ad5f47"/>
+      <stop offset="1" stop-color="#ad5f47" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="700" fill="url(#hbg)"/>
+  <!-- 火光辉映 -->
+  <ellipse cx="600" cy="720" rx="560" ry="240" fill="url(#fireglow)"/>
+  <!-- 窑炉剪影 -->
+  <path d="M80 700 L180 420 L1020 420 L1120 700 Z" fill="#0f130d" opacity="0.85"/>
+  <path d="M240 420 L300 300 L360 420 Z" fill="#0f130d"/>
+  <path d="M500 420 L560 280 L620 420 Z" fill="#0f130d"/>
+  <path d="M820 420 L880 300 L940 420 Z" fill="#0f130d"/>
+  <!-- 火星 -->
+  <g fill="url(#ember)">
+    <circle cx="300" cy="460" r="5"/>
+    <circle cx="560" cy="480" r="7"/>
+    <circle cx="880" cy="450" r="5"/>
+    <circle cx="430" cy="520" r="4"/>
+    <circle cx="700" cy="500" r="6"/>
+    <circle cx="950" cy="530" r="4"/>
+    <circle cx="200" cy="540" r="3"/>
+  </g>
+  <!-- 器物在火中的轮廓 -->
+  <g fill="#0f130d" opacity="0.7">
+    <path d="M520 420 C520 460 540 480 560 480 C580 480 600 460 600 420 Z"/>
+    <path d="M840 420 C840 470 860 490 880 490 C900 490 920 470 920 420 Z"/>
+  </g>
+</svg>

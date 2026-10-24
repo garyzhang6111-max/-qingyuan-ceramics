@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="vb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c0a87e"/>
+      <stop offset="0.5" stop-color="#a07a52"/>
+      <stop offset="1" stop-color="#5c4630"/>
+    </linearGradient>
+    <linearGradient id="vraw" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8a7a5c"/>
+      <stop offset="1" stop-color="#5c5038"/>
+    </linearGradient>
+    <radialGradient id="vash" cx="0.65" cy="0.3" r="0.6">
+      <stop offset="0" stop-color="#b0542a" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#b0542a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain3">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.08 0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#f4eee2"/>
+  <!-- 枯枝 -->
+  <g stroke="#5c5038" stroke-width="4" stroke-linecap="round" fill="none">
+    <path d="M200 180 L210 60"/>
+    <path d="M200 180 L150 90"/>
+    <path d="M200 180 L260 100"/>
+    <path d="M210 60 L250 40"/>
+    <path d="M150 90 L120 50"/>
+  </g>
+  <!-- 花瓶身 -->
+  <path d="M160 220 C160 300 150 380 170 430 L230 430 C250 380 240 300 240 220 C240 200 220 190 200 190 C180 190 160 200 160 220 Z" fill="url(#vb)" filter="url(#grain3)"/>
+  <!-- 落灰红斑 -->
+  <ellipse cx="215" cy="290" rx="38" ry="70" fill="url(#vash)"/>
+  <!-- 露胎 -->
+  <rect x="165" y="428" width="70" height="16" rx="4" fill="url(#vraw)" opacity="0.85"/>
+  <!-- 高光 -->
+  <ellipse cx="185" cy="280" rx="16" ry="50" fill="#ffffff" opacity="0.07"/>
+</svg>

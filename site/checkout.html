@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-zh="结算 · 完成订单" data-en="Checkout">Checkout</title>
+<meta name="description" data-zh="完成你的柴烧订单——填写收货信息并支付，锁定你心仪的孤品。" data-en="Complete your QINGYUAN order — shipping and payment to reserve your piece." content="Complete your QINGYUAN order — shipping and payment to reserve your piece.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="canonical" href="https://www.qingyuan-ceramics.com/checkout.html">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="logo" data-zh="清原" data-en="QINGYUAN">QINGYUAN</a>
+    <ul class="nav-links" id="nav">
+      <li><a href="index.html" data-zh="首页" data-en="Home">Home</a></li>
+      <li><a href="shop.html" data-zh="商店" data-en="Shop">Shop</a></li>
+      <li><a href="masters.html" data-zh="大师" data-en="Masters">Masters</a></li>
+      <li><a href="craft.html" data-zh="工艺" data-en="Craft">Craft</a></li>
+      <li><a href="about.html" data-zh="关于" data-en="About">About</a></li>
+      <li><a href="contact.html" data-zh="联系" data-en="Contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-switch">
+        <button class="lang-btn" data-lang="zh">中</button>
+        <span class="lang-sep">/</span>
+        <button class="lang-btn active" data-lang="en">EN</button>
+      </div>
+      <button class="burger" id="burger" aria-label="菜单">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="checkout">
+    <div class="wrap">
+      <div class="crumb" style="margin-bottom:20px" data-zh="<a href='index.html'>首页</a> / <a href='shop.html'>商店</a> / 结算" data-en="<a href='index.html'>Home</a> / <a href='shop.html'>Shop</a> / Checkout"><a href="index.html">Home</a> / <a href="shop.html">Shop</a> / Checkout</div>
+      <div class="co-grid">
+        <!-- 订单摘要 -->
+        <div class="co-summary">
+          <h3 data-zh="订单摘要" data-en="Order Summary">Order Summary</h3>
+          <div id="checkout-summary"></div>
+          <div class="cart-note" style="text-align:left;margin-top:16px" data-zh="全球包邮（满 $200），含关税（DDP）。孤品付款后锁定，售出即无。" data-en="Free worldwide shipping over $200, duties included (DDP). One-offs are reserved on payment.">Free worldwide shipping over $200, duties included (DDP). One-offs are reserved on payment.</div>
+        </div>
+
+        <!-- 收货表单 -->
+        <form id="checkout-form">
+          <div class="field">
+            <label data-zh="收货姓名" data-en="Full name">Full name</label>
+            <input type="text" required placeholder="Full name" data-zh="收货姓名" data-en="Full name">Full name</div>
+          <div class="field">
+            <label data-zh="邮箱" data-en="Email">Email</label>
+            <input type="email" required placeholder="you@example.com">
+          </div>
+          <div class="field">
+            <label data-zh="国家 / 地区" data-en="Country / Region">Country / Region</label>
+            <input type="text" required placeholder="Country / Region" data-zh="国家 / 地区" data-en="Country / Region">Country / Region</div>
+          <div class="field">
+            <label data-zh="详细地址" data-en="Address">Address</label>
+            <input type="text" required placeholder="Street, city, postal code" data-zh="街道、城市、邮编" data-en="Street, city, postal code">Street, city, postal code</div>
+          <div class="field">
+            <label data-zh="备注（可选）" data-en="Note (optional)">Note (optional)</label>
+            <textarea placeholder="Note" data-zh="备注" data-en="Note" style="min-height:80px"></textarea>
+          </div>
+          <button type="submit" class="btn solid" data-zh="提交订单并支付" data-en="Place Order &amp; Pay">Place Order &amp; Pay</button>
+          <div id="checkout-done" class="co-done" style="display:none"></div>
+          <p class="form-note" data-zh="提交后进入支付。支付成功后我们会确认库存并发货。" data-en="After submission you will proceed to payment. We confirm stock and ship on payment.">After submission you will proceed to payment. We confirm stock and ship on payment.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="logo" data-zh="清原" data-en="QINGYUAN">QINGYUAN</div>
+        <p data-zh="每一件器物，都是一窑火与泥土的偶遇，世间仅此一件。" data-en="Every piece is a meeting of fire and earth — one of a kind.">Every piece is a meeting of fire and earth — one of a kind.</p>
+      </div>
+      <div>
+        <h4 data-zh="探索" data-en="Explore">Explore</h4>
+        <ul>
+          <li><a href="shop.html" data-zh="作品" data-en="Works">Works</a></li>
+          <li><a href="craft.html" data-zh="工艺" data-en="Craft">Craft</a></li>
+          <li><a href="masters.html" data-zh="大师" data-en="Masters">Masters</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-zh="服务" data-en="Service">Service</h4>
+        <ul>
+          <li><a href="policies/shipping.html" data-zh="全球配送" data-en="Shipping">Shipping</a></li>
+          <li><a href="policies/returns.html" data-zh="退换政策" data-en="Returns">Returns</a></li>
+          <li><a href="policies/privacy.html" data-zh="隐私政策" data-en="Privacy">Privacy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-zh="联系" data-en="Contact">Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@qingyuan.example">hello@qingyuan.example</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Pinterest</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-zh="© 2026 清原 · 版权所有" data-en="© 2026 QINGYUAN · All rights reserved">© 2026 QINGYUAN · All rights reserved</span>
+      <span data-zh="柴烧 · 大师之作 · 世间唯一" data-en="Wood-Fired · Made by Masters · One of a Kind">Wood-Fired · Made by Masters · One of a Kind</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

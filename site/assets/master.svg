@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="mbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c3bd9e"/>
+      <stop offset="1" stop-color="#8a846a"/>
+    </linearGradient>
+    <filter id="sgrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#f4eee2"/>
+  <!-- 匠人剪影 -->
+  <g filter="url(#sgrain)">
+    <circle cx="200" cy="150" r="58" fill="url(#mbg)"/>
+    <path d="M120 500 C120 380 160 320 200 320 C240 320 280 380 280 500 Z" fill="url(#mbg)"/>
+    <!-- 手臂拉坯 -->
+    <path d="M260 360 C300 380 320 420 310 460" stroke="#8a846a" stroke-width="26" stroke-linecap="round" fill="none"/>
+    <!-- 陶轮上的坯 -->
+    <ellipse cx="300" cy="470" rx="55" ry="18" fill="#6a5c48"/>
+    <path d="M290 470 C290 440 300 425 315 420" stroke="#6a5c48" stroke-width="12" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

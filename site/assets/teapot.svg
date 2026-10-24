@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9a06a"/>
+      <stop offset="0.5" stop-color="#a8793f"/>
+      <stop offset="1" stop-color="#6a5230"/>
+    </linearGradient>
+    <linearGradient id="raw" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9a8a6e"/>
+      <stop offset="1" stop-color="#6a5c48"/>
+    </linearGradient>
+    <radialGradient id="ash" cx="0.6" cy="0.3" r="0.7">
+      <stop offset="0" stop-color="#b0542a" stop-opacity="0.5"/>
+      <stop offset="0.6" stop-color="#b0542a" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#b0542a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.08 0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#f4eee2"/>
+  <!-- 壶把 -->
+  <path d="M150 250 C100 255 95 320 135 360" fill="none" stroke="#6a5230" stroke-width="16" stroke-linecap="round"/>
+  <!-- 壶嘴 -->
+  <path d="M268 265 C300 262 316 240 322 214" fill="none" stroke="#6a5230" stroke-width="15" stroke-linecap="round"/>
+  <!-- 壶身 -->
+  <ellipse cx="205" cy="315" rx="92" ry="88" fill="url(#body)" filter="url(#grain)"/>
+  <!-- 落灰红斑 -->
+  <ellipse cx="240" cy="285" rx="70" ry="60" fill="url(#ash)"/>
+  <!-- 露胎底 -->
+  <ellipse cx="205" cy="392" rx="70" ry="20" fill="url(#raw)" opacity="0.9"/>
+  <!-- 壶盖 -->
+  <ellipse cx="205" cy="228" rx="52" ry="14" fill="#8a6a40"/>
+  <!-- 壶钮 -->
+  <ellipse cx="205" cy="218" rx="15" ry="8" fill="#6a5230"/>
+  <!-- 高光 -->
+  <ellipse cx="175" cy="285" rx="28" ry="45" fill="#ffffff" opacity="0.08"/>
+</svg>

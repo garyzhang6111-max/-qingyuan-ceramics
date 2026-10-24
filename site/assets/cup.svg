@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="cb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9ab78"/>
+      <stop offset="0.5" stop-color="#9c6f3f"/>
+      <stop offset="1" stop-color="#59422a"/>
+    </linearGradient>
+    <radialGradient id="cash" cx="0.6" cy="0.35" r="0.6">
+      <stop offset="0" stop-color="#b0542a" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#b0542a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain5">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.08 0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#f4eee2"/>
+  <!-- 茶杯 -->
+  <path d="M150 230 L250 230 L242 380 L158 380 Z" fill="url(#cb)" filter="url(#grain5)"/>
+  <!-- 杯口 -->
+  <ellipse cx="200" cy="230" rx="50" ry="12" fill="#b08755"/>
+  <ellipse cx="200" cy="232" rx="40" ry="8" fill="#8a6238"/>
+  <!-- 落灰红斑 -->
+  <ellipse cx="220" cy="300" rx="26" ry="50" fill="url(#cash)"/>
+  <!-- 高光 -->
+  <ellipse cx="180" cy="290" rx="12" ry="40" fill="#ffffff" opacity="0.08"/>
+</svg>

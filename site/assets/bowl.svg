@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="bb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9b58a"/>
+      <stop offset="0.6" stop-color="#a08a5a"/>
+      <stop offset="1" stop-color="#6a5432"/>
+    </linearGradient>
+    <radialGradient id="bash" cx="0.4" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#b0542a" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#b0542a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain4">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.08 0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="#f4eee2"/>
+  <!-- 碗外 -->
+  <path d="M110 250 C110 330 130 380 200 380 C270 380 290 330 290 250 L260 250 C255 315 235 345 200 345 C165 345 145 315 140 250 Z" fill="url(#bb)" filter="url(#grain4)"/>
+  <!-- 碗内 -->
+  <ellipse cx="200" cy="250" rx="90" ry="28" fill="#e8dcc0"/>
+  <ellipse cx="200" cy="252" rx="66" ry="18" fill="#d8c9a8"/>
+  <!-- 窑变绿斑 -->
+  <ellipse cx="250" cy="330" rx="30" ry="40" fill="url(#bash)"/>
+  <!-- 高光 -->
+  <ellipse cx="165" cy="300" rx="18" ry="40" fill="#ffffff" opacity="0.08"/>
+</svg>

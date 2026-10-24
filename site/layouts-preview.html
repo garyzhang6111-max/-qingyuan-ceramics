@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>布局方案选择 · QINGYUAN</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,"PingFang SC",sans-serif;background:#f4eee2;color:#26201a;line-height:1.7;padding:40px 24px}
+  .intro{max-width:900px;margin:0 auto 48px;text-align:center}
+  .intro h1{font-size:2rem;margin-bottom:10px}
+  .intro p{color:#97876f;font-size:.95rem}
+  .demo{max-width:1100px;margin:0 auto 64px}
+  .demo h2{font-size:1.3rem;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+  .demo h2 .badge{background:#b0542a;color:#fff;font-size:.75rem;padding:2px 12px;border-radius:99px;letter-spacing:.1em}
+  .demo .note{color:#97876f;font-size:.85rem;margin-bottom:20px}
+  .demo-frame{background:#fff;border:1px solid #e3d8c5;border-radius:12px;padding:36px;box-shadow:0 8px 30px -18px rgba(31,25,19,.25)}
+  .cardbox{background:#fbf7f0;border:1px solid #e3d8c5;border-radius:8px;padding:22px 20px}
+  .cardbox h4{font-size:1rem;margin:8px 0 6px}
+  .cardbox p{font-size:.82rem;color:#97876f}
+  .cardbox .num{font-size:1.4rem;color:#c8955a}
+  .cardbox.hi{background:#f0e1cd}
+  .cardbox.lo{background:#f8f1e4}
+
+  /* 方案A：瀑布流 */
+  .mA{column-count:3;column-gap:20px}
+  .mA .cardbox{break-inside:avoid;margin-bottom:20px}
+
+  /* 方案B：错落偏移 */
+  .mB{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+  .mB .cardbox:nth-child(3n+2){margin-top:40px}
+
+  /* 方案C：大小混合（大块+小块） */
+  .mC{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .mC .big{grid-column:span 2;grid-row:span 2}
+  .mC .cardbox{min-height:120px}
+  .mC .big{min-height:260px}
+
+  /* 方案D：交替 zigzag */
+  .mD{display:flex;flex-direction:column;gap:20px}
+  .mD .row{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+  .mD .row:nth-child(even) .cardbox{order:2}
+  .mD .row:nth-child(even) .visual{order:1}
+  .mD .visual{background:linear-gradient(160deg,#f0e1cd,#e2d8c6);border-radius:8px;height:130px;display:flex;align-items:center;justify-content:center;color:#b0542a;font-size:.8rem;letter-spacing:.1em}
+</style>
+<link rel="canonical" href="https://www.qingyuan-ceramics.com/layouts-preview.html">
+</head>
+<body>
+<div class="intro">
+  <h1>内容方块 · 布局方案对比</h1>
+  <p>以下 4 种创意布局，用柴烧真实内容（价值主张三卡片）演示。选一个喜欢的，我应用到网站「产品以外」的板块。</p>
+</div>
+
+<!-- 方案 A -->
+<div class="demo">
+  <h2><span class="badge">方案 A</span>瀑布流 Masonry</h2>
+  <p class="note">卡片高度错落不一，像 Pinterest 一样自然堆叠，最活泼。</p>
+  <div class="demo-frame">
+    <div class="mA">
+      <div class="cardbox"><div class="num">壹</div><h4>大师亲制</h4><p>每件器物皆有匠人署名与编号，附亲签收藏证书。</p></div>
+      <div class="cardbox hi"><div class="num">贰</div><h4>落灰成釉</h4><p>木灰在 1280°C 下落于坯体，长成不可复制的窑变。这是一段比较长的描述文字，用来演示瀑布流里卡片高度自然错落的效果。</p></div>
+      <div class="cardbox"><div class="num">叁</div><h4>世间唯一</h4><p>窑位、火候、灰烬的偶遇——绝无第二件相同。</p></div>
+      <div class="cardbox lo"><div class="num">肆</div><h4>侘寂之美</h4><p>接受不完美、无常与不完整。</p></div>
+      <div class="cardbox"><div class="num">伍</div><h4>木火之源</h4><p>来自柴烧发源地的古法木火，三天三夜一窑火。</p></div>
+      <div class="cardbox hi"><div class="num">陆</div><h4>居家器物</h4><p>从茶席、餐桌到灯下，装点整个家。这段文字稍长，让瀑布流的高度差异更明显。</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 方案 B -->
+<div class="demo">
+  <h2><span class="badge">方案 B</span>错落偏移 Staggered</h2>
+  <p class="note">每列上下错开，中间列下沉，形成阶梯节奏（当前网站用的就是这种，可加强）。</p>
+  <div class="demo-frame">
+    <div class="mB">
+      <div class="cardbox"><div class="num">壹</div><h4>大师亲制</h4><p>每件器物皆有匠人署名与编号，附亲签收藏证书。</p></div>
+      <div class="cardbox hi"><div class="num">贰</div><h4>落灰成釉</h4><p>木灰在 1280°C 下落于坯体，长成不可复制的窑变。</p></div>
+      <div class="cardbox"><div class="num">叁</div><h4>世间唯一</h4><p>窑位、火候、灰烬的偶遇——绝无第二件相同。</p></div>
+      <div class="cardbox lo"><div class="num">肆</div><h4>侘寂之美</h4><p>接受不完美、无常与不完整。</p></div>
+      <div class="cardbox"><div class="num">伍</div><h4>木火之源</h4><p>来自柴烧发源地的古法木火，三天三夜一窑火。</p></div>
+      <div class="cardbox hi"><div class="num">陆</div><h4>居家器物</h4><p>从茶席、餐桌到灯下，装点整个家。</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 方案 C -->
+<div class="demo">
+  <h2><span class="badge">方案 C</span>大小混合 Feature Grid</h2>
+  <p class="note">一块大卡片 + 若干小卡片，主次分明，最有杂志感。</p>
+  <div class="demo-frame">
+    <div class="mC">
+      <div class="cardbox big hi"><div class="num" style="font-size:2rem">壹</div><h4 style="font-size:1.2rem">大师亲制</h4><p>每件器物皆有匠人署名与编号，附亲签收藏证书。这是主推的卖点，用大卡片突出，占据两倍空间，形成视觉焦点。</p></div>
+      <div class="cardbox"><div class="num">贰</div><h4>落灰成釉</h4><p>木灰 1280°C 成釉。</p></div>
+      <div class="cardbox"><div class="num">叁</div><h4>世间唯一</h4><p>绝无第二件。</p></div>
+      <div class="cardbox lo"><div class="num">肆</div><h4>侘寂之美</h4><p>接受不完美。</p></div>
+      <div class="cardbox"><div class="num">伍</div><h4>木火之源</h4><p>古法木火。</p></div>
+      <div class="cardbox hi"><div class="num">陆</div><h4>居家器物</h4><p>装点整个家。</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 方案 D -->
+<div class="demo">
+  <h2><span class="badge">方案 D</span>交替 Zigzag</h2>
+  <p class="note">左图右文、右图左文交替，最适合「工艺步骤」这类图文内容。</p>
+  <div class="demo-frame">
+    <div class="mD">
+      <div class="row">
+        <div class="cardbox"><div class="num">壹</div><h4>选土</h4><p>精选本地陶土，决定器物的底色与性格。</p></div>
+        <div class="visual">图 · 选土</div>
+      </div>
+      <div class="row">
+        <div class="cardbox"><div class="num">贰</div><h4>拉坯</h4><p>手工成型，留下手指与陶刀的痕迹。</p></div>
+        <div class="visual">图 · 拉坯</div>
+      </div>
+      <div class="row">
+        <div class="cardbox"><div class="num">叁</div><h4>守火</h4><p>三天三夜不间断投柴，温度与气流作画。</p></div>
+        <div class="visual">图 · 守火</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="intro" style="margin-top:24px">
+  <p style="font-size:.9rem">回复「A / B / C / D」或「B+C 混合」等，我就应用到网站上。也可以说「都要浅色衬托」或指定某个方案微调。</p>
+</div>
+</body>
+</html>
