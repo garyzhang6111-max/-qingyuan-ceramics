@@ -158,19 +158,12 @@ section{padding:96px 0}
 .craft{background:var(--bg)}
 .steps{position:relative;width:700px;max-width:100%;aspect-ratio:1;margin:0 auto;counter-reset:s}
 .step{counter-increment:s;position:absolute;top:50%;left:50%;width:210px;padding:22px 18px 20px;background:#f7f2e8;border:1px solid var(--line);border-radius:4px;transition:border-color .3s,box-shadow .3s}
-.step:nth-child(1){--a:0deg}
-.step:nth-child(2){--a:60deg}
-.step:nth-child(3){--a:120deg}
-.step:nth-child(4){--a:180deg}
-.step:nth-child(5){--a:240deg}
-.step:nth-child(6){--a:300deg}
-.step{transform:translate(-50%,-50%) rotate(var(--a)) translateY(-252px) rotate(calc(-1 * var(--a)))}
-.step:nth-child(1){background:#f7f2e8}
-.step:nth-child(2){background:#f2e9d8}
-.step:nth-child(3){background:#ebdfc8}
-.step:nth-child(4){background:#e2d2b4}
-.step:nth-child(5){background:#d6bf9a}
-.step:nth-child(6){background:#c9ac80}
+.step:nth-child(1){background:#f7f2e8;transform:translate(-50%,-50%) rotate(0deg) translateY(-252px) rotate(0deg)}
+.step:nth-child(2){background:#f2e9d8;transform:translate(-50%,-50%) rotate(60deg) translateY(-252px) rotate(-60deg)}
+.step:nth-child(3){background:#ebdfc8;transform:translate(-50%,-50%) rotate(120deg) translateY(-252px) rotate(-120deg)}
+.step:nth-child(4){background:#e2d2b4;transform:translate(-50%,-50%) rotate(180deg) translateY(-252px) rotate(-180deg)}
+.step:nth-child(5){background:#d6bf9a;transform:translate(-50%,-50%) rotate(240deg) translateY(-252px) rotate(-240deg)}
+.step:nth-child(6){background:#c9ac80;transform:translate(-50%,-50%) rotate(300deg) translateY(-252px) rotate(-300deg)}
 .step:hover{border-color:var(--accent2);box-shadow:0 18px 36px -20px rgba(31,25,19,.30)}
 .step::before{content:counter(s,decimal-leading-zero);display:block;font-family:var(--serif);font-size:2.2rem;line-height:1;color:transparent;-webkit-text-stroke:1px var(--accent2);opacity:.55;margin-bottom:10px;transition:opacity .4s}
 .step:hover::before{opacity:1}
@@ -178,9 +171,8 @@ section{padding:96px 0}
 .step h3::after{content:'';position:absolute;left:0;bottom:-1px;width:26px;height:2px;background:var(--accent);transition:width .4s}
 .step:hover h3::after{width:48px}
 .step p{color:var(--ink2);font-size:.8rem;line-height:1.7;margin-top:8px}
-.craft-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:252px;aspect-ratio:1;border-radius:50%;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 50px -24px rgba(31,25,19,.4)}
-.craft-center img{width:100%;height:100%;object-fit:cover;display:block}
-.craft-center-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(31,25,19,.15) 0%,rgba(31,25,19,.55) 100%);color:#f3ece0;font-family:var(--serif);font-size:1.15rem;letter-spacing:.2em}
+.craft-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:252px;aspect-ratio:1;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;border:1px solid var(--accent2);box-shadow:0 20px 50px -24px rgba(31,25,19,.4)}
+.craft-center-text{color:#f3ece0;font-family:var(--serif);font-size:1.2rem;letter-spacing:.22em;text-align:center;line-height:2}
 .craft-final{text-align:center;margin-top:56px;font-family:var(--serif);font-size:1.3rem;color:var(--ink2)}
 
 /* ---------- 柴烧知识 ---------- */
