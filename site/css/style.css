@@ -174,16 +174,16 @@ section{padding:96px 0}
 .craft-final{text-align:center;margin-top:48px;font-family:var(--serif);font-size:1.3rem;color:var(--ink2)}
 
 /* 八卦环形布局（首页专用） */
-.steps-ring{position:relative;width:700px;max-width:100%;aspect-ratio:1;margin:0 auto;counter-reset:s;display:block}
-.steps-ring .step{position:absolute;width:200px;padding:20px 16px 18px;border:1px solid var(--line);counter-increment:s}
-.steps-ring .step:nth-child(1){left:350px;top:70px;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(2){left:548px;top:151px;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(3){left:630px;top:350px;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(4){left:548px;top:549px;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(5){left:350px;top:630px;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(6){left:152px;top:549px;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(7){left:70px;top:350px;transform:translate(-50%,-50%)}
-.steps-ring .step:nth-child(8){left:152px;top:151px;transform:translate(-50%,-50%)}
+.steps-ring{position:relative;width:760px;max-width:100%;aspect-ratio:1;margin:0 auto;counter-reset:s;display:block}
+.steps-ring .step{position:absolute;width:186px;padding:18px 14px 16px;border:1px solid var(--line);border-radius:4px;counter-increment:s}
+.steps-ring .step:nth-child(1){left:380px;top:100px;transform:translate(-50%,-50%)}
+.steps-ring .step:nth-child(2){left:578px;top:182px;transform:translate(-50%,-50%)}
+.steps-ring .step:nth-child(3){left:660px;top:380px;transform:translate(-50%,-50%)}
+.steps-ring .step:nth-child(4){left:578px;top:578px;transform:translate(-50%,-50%)}
+.steps-ring .step:nth-child(5){left:380px;top:660px;transform:translate(-50%,-50%)}
+.steps-ring .step:nth-child(6){left:182px;top:578px;transform:translate(-50%,-50%)}
+.steps-ring .step:nth-child(7){left:100px;top:380px;transform:translate(-50%,-50%)}
+.steps-ring .step:nth-child(8){left:182px;top:182px;transform:translate(-50%,-50%)}
 .steps-ring .step:nth-child(1){background:#f7f2e8}
 .steps-ring .step:nth-child(2){background:#f2e9d8}
 .steps-ring .step:nth-child(3){background:#ebdfc8}
