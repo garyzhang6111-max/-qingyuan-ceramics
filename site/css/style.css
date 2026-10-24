@@ -170,7 +170,7 @@ section{padding:96px 0}
 .step h3{font-size:1.25rem;margin:0 0 14px;letter-spacing:.08em;padding-bottom:14px;border-bottom:1px solid var(--line);position:relative}
 .step h3::after{content:'';position:absolute;left:0;bottom:-1px;width:32px;height:2px;background:var(--accent);transition:width .4s}
 .step:hover h3::after{width:60px}
-.step p{color:var(--muted);font-size:.9rem;line-height:1.85;margin-top:12px}
+.step p{color:var(--ink2);font-size:.9rem;line-height:1.85;margin-top:12px}
 .craft-final{text-align:center;margin-top:48px;font-family:var(--serif);font-size:1.3rem;color:var(--ink2)}
 
 /* ---------- 柴烧知识 ---------- */
