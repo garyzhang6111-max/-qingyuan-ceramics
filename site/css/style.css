@@ -177,15 +177,20 @@ section{padding:96px 0}
 /* ---------- 柴烧知识 ---------- */
 .facts{background:var(--bg2)}
 .facts .sec-head{margin-bottom:48px}
-.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
+.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
 .fact{border:1px solid var(--line);background:#fbf7f0;padding:34px 28px;transition:.3s}
-.fact:nth-child(3n+1){background:#f6ecdb}
-.fact:nth-child(3n+2){background:#f0e1cd;margin-top:36px}
-.fact:nth-child(3n){background:#f8f1e4}
+.fact:nth-child(1){background:#f7f2e8}
+.fact:nth-child(2){background:#f2e9d8}
+.fact:nth-child(3){background:#ebdfc8}
+.fact:nth-child(4){background:#e2d2b4}
+.fact:nth-child(5){background:#d6bf9a}
+.fact:nth-child(6){background:#c9ac80}
 .fact:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(31,25,19,.28)}
 .fact .fact-num{font-family:var(--serif);color:var(--accent2);font-size:1.5rem;line-height:1}
 .fact h3{font-size:1.12rem;margin:14px 0 10px;letter-spacing:.06em}
-.fact p{color:var(--muted);font-size:.9rem;line-height:1.85}
+.fact p{color:var(--ink2);font-size:.9rem;line-height:1.85}
+.fact:nth-child(5) .fact-num,.fact:nth-child(6) .fact-num{color:var(--ink2)}
+.fact:nth-child(6) p{color:var(--ink)}
 
 /* ---------- 工艺纪实图集 ---------- */
 .gallery{background:var(--bg)}
