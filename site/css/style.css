@@ -156,24 +156,22 @@ section{padding:96px 0}
 
 /* ---------- 工艺 ---------- */
 .craft{background:var(--bg)}
-.steps{position:relative;width:700px;max-width:100%;aspect-ratio:1;margin:0 auto;counter-reset:s}
-.step{counter-increment:s;position:absolute;top:50%;left:50%;width:210px;padding:22px 18px 20px;background:#f7f2e8;border:1px solid var(--line);border-radius:4px;transition:border-color .3s,box-shadow .3s}
-.step:nth-child(1){background:#f7f2e8;transform:translate(-50%,-50%) rotate(0deg) translateY(-252px) rotate(0deg)}
-.step:nth-child(2){background:#f2e9d8;transform:translate(-50%,-50%) rotate(60deg) translateY(-252px) rotate(-60deg)}
-.step:nth-child(3){background:#ebdfc8;transform:translate(-50%,-50%) rotate(120deg) translateY(-252px) rotate(-120deg)}
-.step:nth-child(4){background:#e2d2b4;transform:translate(-50%,-50%) rotate(180deg) translateY(-252px) rotate(-180deg)}
-.step:nth-child(5){background:#d6bf9a;transform:translate(-50%,-50%) rotate(240deg) translateY(-252px) rotate(-240deg)}
-.step:nth-child(6){background:#c9ac80;transform:translate(-50%,-50%) rotate(300deg) translateY(-252px) rotate(-300deg)}
-.step:hover{border-color:var(--accent2);box-shadow:0 18px 36px -20px rgba(31,25,19,.30)}
-.step::before{content:counter(s,decimal-leading-zero);display:block;font-family:var(--serif);font-size:2.2rem;line-height:1;color:transparent;-webkit-text-stroke:1px var(--accent2);opacity:.55;margin-bottom:10px;transition:opacity .4s}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:s;align-items:stretch}
+.step{counter-increment:s;position:relative;padding:34px 30px 30px;border-radius:3px;transition:.3s}
+.step:nth-child(1){background:#f7f2e8}
+.step:nth-child(2){background:#f2e9d8}
+.step:nth-child(3){background:#ebdfc8}
+.step:nth-child(4){background:#e2d2b4}
+.step:nth-child(5){background:#d6bf9a}
+.step:nth-child(6){background:#c9ac80}
+.step:hover{transform:translateY(-5px);box-shadow:0 22px 44px -24px rgba(31,25,19,.30)}
+.step::before{content:counter(s,decimal-leading-zero);display:block;font-family:var(--serif);font-size:3.2rem;line-height:1;color:transparent;-webkit-text-stroke:1px var(--accent2);opacity:.55;margin-bottom:14px;transition:opacity .4s}
 .step:hover::before{opacity:1}
-.step h3{font-size:1.1rem;margin:0 0 10px;letter-spacing:.06em;padding-bottom:10px;border-bottom:1px solid var(--line);position:relative}
-.step h3::after{content:'';position:absolute;left:0;bottom:-1px;width:26px;height:2px;background:var(--accent);transition:width .4s}
-.step:hover h3::after{width:48px}
-.step p{color:var(--ink2);font-size:.8rem;line-height:1.7;margin-top:8px}
-.craft-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:252px;aspect-ratio:1;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;border:1px solid var(--accent2);box-shadow:0 20px 50px -24px rgba(31,25,19,.4)}
-.craft-center-text{color:#f3ece0;font-family:var(--serif);font-size:1.2rem;letter-spacing:.22em;text-align:center;line-height:2}
-.craft-final{text-align:center;margin-top:56px;font-family:var(--serif);font-size:1.3rem;color:var(--ink2)}
+.step h3{font-size:1.25rem;margin:0 0 14px;letter-spacing:.08em;padding-bottom:14px;border-bottom:1px solid var(--line);position:relative}
+.step h3::after{content:'';position:absolute;left:0;bottom:-1px;width:32px;height:2px;background:var(--accent);transition:width .4s}
+.step:hover h3::after{width:60px}
+.step p{color:var(--ink2);font-size:.9rem;line-height:1.85;margin-top:12px}
+.craft-final{text-align:center;margin-top:48px;font-family:var(--serif);font-size:1.3rem;color:var(--ink2)}
 
 /* ---------- 柴烧知识 ---------- */
 .facts{background:var(--bg2)}
@@ -336,11 +334,6 @@ footer{background:var(--dark2);color:#b7a88c;padding:64px 0 40px;font-size:.88re
   .burger{display:block}
   .vals,.grid,.quote-grid,.steps,.fact-grid{grid-template-columns:1fr}
   .val:nth-child(2),.step:nth-child(3n+2),.fact:nth-child(3n+2),.quote:nth-child(2){margin-top:0}
-  .steps{width:100%;aspect-ratio:auto;padding:0;counter-reset:s}
-  .step{position:relative;top:auto;left:auto;transform:none;width:100%;margin-bottom:14px;padding:20px 20px 18px}
-  .craft-center{position:relative;top:auto;left:auto;transform:none;width:140px;margin:20px auto 0}
-  .craft-center-text{font-size:.95rem}
-  .step::before{font-size:2rem}
   .shop .grid{grid-template-columns:1fr 1fr;gap:14px}
   .shop .card-body{padding:14px 14px 16px}
   .shop .card h3{font-size:1rem}
