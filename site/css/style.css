@@ -157,7 +157,13 @@ section{padding:96px 0}
 /* ---------- 工艺 ---------- */
 .craft{background:var(--bg)}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:s;align-items:stretch}
-.step{counter-increment:s;position:relative;padding:34px 30px 30px;background:#fbf7f0;border:1px solid var(--line);border-radius:3px;transition:.3s}
+.step{counter-increment:s;position:relative;padding:34px 30px 30px;background:#f7f2e8;border:1px solid var(--line);border-radius:3px;transition:.3s}
+.step:nth-child(1){background:#f7f2e8}
+.step:nth-child(2){background:#f2e9d8}
+.step:nth-child(3){background:#ebdfc8}
+.step:nth-child(4){background:#e2d2b4}
+.step:nth-child(5){background:#d6bf9a}
+.step:nth-child(6){background:#c9ac80}
 .step:hover{transform:translateY(-5px);box-shadow:0 22px 44px -24px rgba(31,25,19,.30);border-color:var(--accent2)}
 .step::before{content:counter(s,decimal-leading-zero);display:block;font-family:var(--serif);font-size:3.2rem;line-height:1;color:transparent;-webkit-text-stroke:1px var(--accent2);opacity:.55;margin-bottom:14px;transition:opacity .4s}
 .step:hover::before{opacity:1}
