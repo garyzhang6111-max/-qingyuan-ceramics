@@ -355,4 +355,163 @@
       io.observe(el);
     });
   }
+
+  /* ============ 图片放大 Lightbox（滚轮缩放 / 拖动 / 双击全屏）============ */
+  function initLightbox() {
+    var mainImg = document.querySelector('.pd-gallery .ph.main img');
+    if (!mainImg) return;
+
+    // 创建 lightbox DOM
+    var lb = document.createElement('div');
+    lb.className = 'lb';
+    lb.innerHTML = '';
+    var lbImg = document.createElement('img');
+    lbImg.src = mainImg.src;
+    lbImg.alt = mainImg.alt || '';
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'lb-close';
+    closeBtn.setAttribute('aria-label', 'Close');
+    closeBtn.innerHTML = '&times;';
+    var zoomWrap = document.createElement('div');
+    zoomWrap.className = 'lb-zoom';
+    var btnOut = document.createElement('button');
+    btnOut.innerHTML = '&minus;';
+    btnOut.setAttribute('aria-label', 'Zoom out');
+    var btnFit = document.createElement('button');
+    btnFit.textContent = 'Fit';
+    var btnIn = document.createElement('button');
+    btnIn.innerHTML = '&plus;';
+    btnIn.setAttribute('aria-label', 'Zoom in');
+    var btnFs = document.createElement('button');
+    btnFs.textContent = 'Full';
+    zoomWrap.appendChild(btnOut);
+    zoomWrap.appendChild(btnFit);
+    zoomWrap.appendChild(btnIn);
+    zoomWrap.appendChild(btnFs);
+    var hint = document.createElement('div');
+    hint.className = 'lb-hint';
+    hint.textContent = 'Scroll to zoom · Drag to move · Double-click for fullscreen';
+    lb.appendChild(lbImg);
+    lb.appendChild(closeBtn);
+    lb.appendChild(zoomWrap);
+    lb.appendChild(hint);
+    document.body.appendChild(lb);
+
+    var scale = 1, minScale = 0.5, maxScale = 6;
+    var tx = 0, ty = 0;
+
+    function apply() {
+      lbImg.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+    }
+
+    function fit() {
+      scale = 1; tx = 0; ty = 0;
+      apply();
+    }
+
+    function open() {
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      // 初始适配：图片不超过视口
+      var vw = lb.clientWidth, vh = lb.clientHeight;
+      var iw = lbImg.naturalWidth, ih = lbImg.naturalHeight;
+      var fitScale = Math.min(vw / iw, vh / ih, 1);
+      scale = fitScale;
+      tx = 0; ty = 0;
+      apply();
+    }
+
+    function close() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function setScale(ns, cx, cy) {
+      // 以 (cx,cy) 为焦点缩放
+      var oldScale = scale;
+      scale = Math.min(maxScale, Math.max(minScale, ns));
+      var k = scale / oldScale;
+      tx = cx - (cx - tx) * k;
+      ty = cy - (cy - ty) * k;
+      apply();
+    }
+
+    // 打开
+    mainImg.addEventListener('click', open);
+    // 关闭
+    closeBtn.addEventListener('click', function (e) { e.stopPropagation(); close(); });
+    lb.addEventListener('click', function (e) {
+      if (e.target === lb) close();
+    });
+    // 键盘
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === '+' || e.key === '=') setScale(scale * 1.2, lb.clientWidth / 2, lb.clientHeight / 2);
+      if (e.key === '-') setScale(scale / 1.2, lb.clientWidth / 2, lb.clientHeight / 2);
+      if (e.key === '0') fit();
+    });
+    // 滚轮缩放
+    lb.addEventListener('wheel', function (e) {
+      if (!lb.classList.contains('open')) return;
+      e.preventDefault();
+      var rect = lbImg.getBoundingClientRect();
+      var cx = e.clientX - rect.left;
+      var cy = e.clientY - rect.top;
+      var factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+      setScale(scale * factor, cx, cy);
+    }, { passive: false });
+    // 按钮缩放
+    btnIn.addEventListener('click', function (e) { e.stopPropagation(); setScale(scale * 1.3, lb.clientWidth / 2, lb.clientHeight / 2); });
+    btnOut.addEventListener('click', function (e) { e.stopPropagation(); setScale(scale / 1.3, lb.clientWidth / 2, lb.clientHeight / 2); });
+    btnFit.addEventListener('click', function (e) { e.stopPropagation(); fit(); });
+    // 全屏（双击 或 Full 按钮）
+    function toggleFullscreen() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else if (lb.requestFullscreen) {
+        lb.requestFullscreen();
+      }
+    }
+    btnFs.addEventListener('click', function (e) { e.stopPropagation(); toggleFullscreen(); });
+    lbImg.addEventListener('dblclick', function (e) { e.stopPropagation(); toggleFullscreen(); });
+
+    // 拖动平移
+    var dragging = false, sx = 0, sy = 0, otx = 0, oty = 0;
+    lbImg.addEventListener('mousedown', function (e) {
+      dragging = true;
+      sx = e.clientX; sy = e.clientY;
+      otx = tx; oty = ty;
+      lbImg.classList.add('dragging');
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (!dragging) return;
+      tx = otx + (e.clientX - sx);
+      ty = oty + (e.clientY - sy);
+      apply();
+    });
+    window.addEventListener('mouseup', function () {
+      dragging = false;
+      lbImg.classList.remove('dragging');
+    });
+    // 触摸拖动
+    var touchStart = null;
+    lbImg.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 1) {
+        touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY, tx: tx, ty: ty };
+        dragging = true;
+      }
+    }, { passive: true });
+    lbImg.addEventListener('touchmove', function (e) {
+      if (dragging && touchStart && e.touches.length === 1) {
+        tx = touchStart.tx + (e.touches[0].clientX - touchStart.x);
+        ty = touchStart.ty + (e.touches[0].clientY - touchStart.y);
+        apply();
+      }
+    }, { passive: true });
+    lbImg.addEventListener('touchend', function () { dragging = false; });
+  }
+
+  initLightbox();
 })();
