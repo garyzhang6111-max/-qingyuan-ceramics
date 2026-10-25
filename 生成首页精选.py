@@ -6,15 +6,18 @@ ROOT = '/Users/zhangge/.openclaw/workspace-personal-assistant/柴烧网站'
 SITE = os.path.join(ROOT, 'site')
 DATA = json.load(open(os.path.join(ROOT, 'data/products.json')))
 
-# 7 款代表产品（覆盖台灯/马克杯/茶器/香炉/花器/茶盘/摆件全部品类，颜色深、摆正、主体突出）
+# 10 款代表产品（覆盖全部品类，颜色深、摆正、主体突出；顺序交错打乱）
 SLUGS = [
-    'lamp-sphere-rock',     # 台灯 · 黑灰岩球形
-    'mug-lava',             # 马克杯 · 黑褐熔岩
-    'tea-gaiwan-brown',     # 茶器 · 盖碗黑褐古铜
-    'incense-tall-brown',   # 香炉 · 高足深茶褐
-    'vase-olive-crackle',   # 花器 · 橄榄绿冰裂
-    'plate-checker',        # 茶盘 · 四格棋盘
-    'sculpture-sphere',     # 摆件 · 球形
+    'lamp-sphere-rock',       # 台灯 · 黑灰岩
+    'mug-lava',               # 马克杯 · 黑褐熔岩
+    'tea-gaiwan-brown',       # 茶器 · 盖碗黑褐古铜
+    'lamp-sphere-vermillion', # 台灯 · 朱红岩（红）
+    'vase-olive-crackle',     # 花器 · 橄榄绿冰裂
+    'mug-red-iron',           # 马克杯 · 红彩铁红（红）
+    'plate-checker',          # 茶盘 · 四格棋盘
+    'incense-tall-brown',     # 香炉 · 高足深茶褐
+    'mug-oildrop-olive',      # 马克杯 · 橄榄绿油滴（绿）
+    'sculpture-sphere',       # 摆件 · 球形
 ]
 
 prods = {p['slug']: p for p in DATA['products']}
