@@ -17,6 +17,7 @@ SLUGS = [
     'plate-checker',          # 茶盘 · 四格棋盘
     'incense-tall-brown',     # 香炉 · 高足深茶褐
     'mug-red-iron',           # 马克杯 · 红彩铁红（红）
+    'vase-bicolor-round',     # 花器 · 米白红褐
     'sculpture-sphere',       # 摆件 · 球形
 ]
 
