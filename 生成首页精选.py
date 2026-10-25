@@ -13,10 +13,10 @@ SLUGS = [
     'tea-gaiwan-brown',       # 茶器 · 盖碗黑褐古铜
     'lamp-sphere-vermillion', # 台灯 · 朱红岩（红）
     'vase-olive-crackle',     # 花器 · 橄榄绿冰裂
-    'mug-red-iron',           # 马克杯 · 红彩铁红（红）
+    'mug-oildrop-olive',      # 马克杯 · 橄榄绿油滴（绿）
     'plate-checker',          # 茶盘 · 四格棋盘
     'incense-tall-brown',     # 香炉 · 高足深茶褐
-    'mug-oildrop-olive',      # 马克杯 · 橄榄绿油滴（绿）
+    'mug-red-iron',           # 马克杯 · 红彩铁红（红）
     'sculpture-sphere',       # 摆件 · 球形
 ]
 
