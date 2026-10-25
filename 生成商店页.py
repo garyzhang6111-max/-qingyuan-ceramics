@@ -6,7 +6,7 @@ ROOT = '/Users/zhangge/.openclaw/workspace-personal-assistant/柴烧网站'
 SITE = os.path.join(ROOT, 'site')
 DATA = json.load(open(os.path.join(ROOT, 'data/products.json')))
 
-CATS = [('守光灯具', 'Light Keeper', 'lamp'), ('马克杯', 'Mugs', 'mug'), ('茶器', 'Tea Ware', 'tea'), ('香炉', 'Incense Burners', 'incense'), ('花器', 'Vases', 'vase'), ('茶盘', 'Tea Trays', 'plate')]
+CATS = [('守光灯具', 'Light Keeper', 'lamp'), ('马克杯', 'Mugs', 'mug'), ('茶器', 'Tea Ware', 'tea'), ('香炉', 'Incense Burners', 'incense'), ('花器', 'Vases', 'vase'), ('茶盘', 'Tea Trays', 'plate'), ('摆件', 'Sculptures', 'sculpture')]
 
 def price_html(p):
     return '€' + p['price'].rstrip('0').rstrip('.') if p['price'] else 'Price on request'
