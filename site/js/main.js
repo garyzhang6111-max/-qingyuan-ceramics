@@ -404,21 +404,27 @@
       lbImg.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
     }
 
+    function center(s) {
+      var vw = lb.clientWidth, vh = lb.clientHeight;
+      var iw = lbImg.naturalWidth || lbImg.width || 1;
+      var ih = lbImg.naturalHeight || lbImg.height || 1;
+      tx = (vw - iw * s) / 2;
+      ty = (vh - ih * s) / 2;
+    }
+
     function fit() {
-      scale = 1; tx = 0; ty = 0;
+      var vw = lb.clientWidth, vh = lb.clientHeight;
+      var iw = lbImg.naturalWidth || lbImg.width || 1;
+      var ih = lbImg.naturalHeight || lbImg.height || 1;
+      scale = Math.min(vw / iw, vh / ih, 1);
+      center(scale);
       apply();
     }
 
     function open() {
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
-      // 初始适配：图片不超过视口
-      var vw = lb.clientWidth, vh = lb.clientHeight;
-      var iw = lbImg.naturalWidth, ih = lbImg.naturalHeight;
-      var fitScale = Math.min(vw / iw, vh / ih, 1);
-      scale = fitScale;
-      tx = 0; ty = 0;
-      apply();
+      fit();
     }
 
     function close() {
@@ -427,12 +433,13 @@
     }
 
     function setScale(ns, cx, cy) {
-      // 以 (cx,cy) 为焦点缩放
+      // 以容器坐标 (cx,cy) 为焦点缩放，焦点保持不动
       var oldScale = scale;
       scale = Math.min(maxScale, Math.max(minScale, ns));
-      var k = scale / oldScale;
-      tx = cx - (cx - tx) * k;
-      ty = cy - (cy - ty) * k;
+      var px = (cx - tx) / oldScale;  // 焦点在图片内的坐标
+      var py = (cy - ty) / oldScale;
+      tx = cx - px * scale;
+      ty = cy - py * scale;
       apply();
     }
 
@@ -455,9 +462,9 @@
     lb.addEventListener('wheel', function (e) {
       if (!lb.classList.contains('open')) return;
       e.preventDefault();
-      var rect = lbImg.getBoundingClientRect();
-      var cx = e.clientX - rect.left;
-      var cy = e.clientY - rect.top;
+      var lr = lb.getBoundingClientRect();
+      var cx = e.clientX - lr.left;
+      var cy = e.clientY - lr.top;
       var factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
       setScale(scale * factor, cx, cy);
     }, { passive: false });

@@ -230,7 +230,7 @@ section{padding:96px 0}
 /* ---------- 图片放大 Lightbox ---------- */
 .lb{position:fixed;inset:0;background:rgba(12,9,6,.96);z-index:9999;display:none;align-items:center;justify-content:center;overflow:hidden;cursor:zoom-out}
 .lb.open{display:flex}
-.lb img{max-width:none;max-height:none;user-select:none;-webkit-user-drag:none;transform-origin:center center;will-change:transform;cursor:grab}
+.lb img{position:absolute;top:0;left:0;max-width:none;max-height:none;user-select:none;-webkit-user-drag:none;transform-origin:0 0;will-change:transform;cursor:grab}
 .lb img.dragging{cursor:grabbing}
 .lb-close{position:absolute;top:18px;right:22px;width:44px;height:44px;border:1px solid rgba(240,230,212,.35);border-radius:50%;background:rgba(0,0,0,.35);color:#f0e6d4;font-size:1.5rem;line-height:1;cursor:pointer;z-index:2;transition:.2s}
 .lb-close:hover{background:rgba(0,0,0,.6);border-color:#f0e6d4}
