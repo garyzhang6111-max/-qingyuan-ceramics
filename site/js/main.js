@@ -454,23 +454,23 @@
     document.addEventListener('keydown', function (e) {
       if (!lb.classList.contains('open')) return;
       if (e.key === 'Escape') close();
-      if (e.key === '+' || e.key === '=') setScale(scale * 1.2, lb.clientWidth / 2, lb.clientHeight / 2);
-      if (e.key === '-') setScale(scale / 1.2, lb.clientWidth / 2, lb.clientHeight / 2);
+      if (e.key === '+' || e.key === '=') setScale(scale * 1.12, lb.clientWidth / 2, lb.clientHeight / 2);
+      if (e.key === '-') setScale(scale / 1.12, lb.clientWidth / 2, lb.clientHeight / 2);
       if (e.key === '0') fit();
     });
-    // 滚轮缩放
+    // 滚轮缩放（慢速）
     lb.addEventListener('wheel', function (e) {
       if (!lb.classList.contains('open')) return;
       e.preventDefault();
       var lr = lb.getBoundingClientRect();
       var cx = e.clientX - lr.left;
       var cy = e.clientY - lr.top;
-      var factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+      var factor = e.deltaY < 0 ? 1.06 : 1 / 1.06;
       setScale(scale * factor, cx, cy);
     }, { passive: false });
-    // 按钮缩放
-    btnIn.addEventListener('click', function (e) { e.stopPropagation(); setScale(scale * 1.3, lb.clientWidth / 2, lb.clientHeight / 2); });
-    btnOut.addEventListener('click', function (e) { e.stopPropagation(); setScale(scale / 1.3, lb.clientWidth / 2, lb.clientHeight / 2); });
+    // 按钮缩放（慢速）
+    btnIn.addEventListener('click', function (e) { e.stopPropagation(); setScale(scale * 1.18, lb.clientWidth / 2, lb.clientHeight / 2); });
+    btnOut.addEventListener('click', function (e) { e.stopPropagation(); setScale(scale / 1.18, lb.clientWidth / 2, lb.clientHeight / 2); });
     btnFit.addEventListener('click', function (e) { e.stopPropagation(); fit(); });
     // 全屏（双击 或 Full 按钮）
     function toggleFullscreen() {
@@ -485,6 +485,7 @@
 
     // 拖动平移
     var dragging = false, sx = 0, sy = 0, otx = 0, oty = 0;
+    lbImg.addEventListener('dragstart', function (e) { e.preventDefault(); });
     lbImg.addEventListener('mousedown', function (e) {
       dragging = true;
       sx = e.clientX; sy = e.clientY;
