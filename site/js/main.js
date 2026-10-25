@@ -404,20 +404,13 @@
       lbImg.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
     }
 
-    function center(s) {
-      var vw = lb.clientWidth, vh = lb.clientHeight;
-      var iw = lbImg.naturalWidth || lbImg.width || 1;
-      var ih = lbImg.naturalHeight || lbImg.height || 1;
-      tx = (vw - iw * s) / 2;
-      ty = (vh - ih * s) / 2;
-    }
-
+    // 图片由 flex 居中定位，图片中心默认在容器中心；translate 是相对该中心的偏移
     function fit() {
       var vw = lb.clientWidth, vh = lb.clientHeight;
       var iw = lbImg.naturalWidth || lbImg.width || 1;
       var ih = lbImg.naturalHeight || lbImg.height || 1;
       scale = Math.min(vw / iw, vh / ih, 1);
-      center(scale);
+      tx = 0; ty = 0;
       apply();
     }
 
@@ -433,13 +426,19 @@
     }
 
     function setScale(ns, cx, cy) {
-      // 以容器坐标 (cx,cy) 为焦点缩放，焦点保持不动
+      // 以容器坐标 (cx,cy) 为焦点缩放，焦点在屏幕上保持不动
       var oldScale = scale;
       scale = Math.min(maxScale, Math.max(minScale, ns));
-      var px = (cx - tx) / oldScale;  // 焦点在图片内的坐标
-      var py = (cy - ty) / oldScale;
-      tx = cx - px * scale;
-      ty = cy - py * scale;
+      var vw = lb.clientWidth, vh = lb.clientHeight;
+      var cx0 = vw / 2 + tx;  // 当前图片中心屏幕坐标
+      var cy0 = vh / 2 + ty;
+      var ox = cx - cx0;      // 焦点相对图片中心的偏移
+      var oy = cy - cy0;
+      var k = scale / oldScale;
+      var newCx = cx - ox * k;  // 缩放后新图片中心
+      var newCy = cy - oy * k;
+      tx = newCx - vw / 2;
+      ty = newCy - vh / 2;
       apply();
     }
 
