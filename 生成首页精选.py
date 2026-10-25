@@ -6,14 +6,15 @@ ROOT = '/Users/zhangge/.openclaw/workspace-personal-assistant/柴烧网站'
 SITE = os.path.join(ROOT, 'site')
 DATA = json.load(open(os.path.join(ROOT, 'data/products.json')))
 
-# 6 款代表产品（覆盖台灯/马克杯/茶器/香炉/花器所有品类）
+# 7 款代表产品（覆盖台灯/马克杯/茶器/香炉/花器/茶盘/摆件全部品类，颜色深、摆正、主体突出）
 SLUGS = [
-    'lamp-ivory-gray',      # 台灯
-    'mug-ribbed-white',     # 马克杯
-    'tea-fairness-cup',   # 茶器·公道杯
-    'vase-ribbed-round',    # 花器
-    'lamp-speckle',         # 台灯
-    'incense-amber',        # 香炉
+    'lamp-sphere-rock',     # 台灯 · 黑灰岩球形
+    'mug-lava',             # 马克杯 · 黑褐熔岩
+    'tea-gaiwan-brown',     # 茶器 · 盖碗黑褐古铜
+    'incense-tall-brown',   # 香炉 · 高足深茶褐
+    'vase-olive-crackle',   # 花器 · 橄榄绿冰裂
+    'plate-checker',        # 茶盘 · 四格棋盘
+    'sculpture-sphere',     # 摆件 · 球形
 ]
 
 prods = {p['slug']: p for p in DATA['products']}
