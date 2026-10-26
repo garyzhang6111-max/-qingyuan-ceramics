@@ -5,9 +5,6 @@
   var lang = localStorage.getItem(LANG_KEY) || 'en';
   var langBtns = document.querySelectorAll('.lang-btn');
 
-  // 支付入口：接入真实 Stripe 时，把下面这个链接替换成你的 Payment Link / Checkout URL
-  var PAYMENT_LINK = null; // 例如 'https://buy.stripe.com/xxxx'
-
   /* ============ 购物车 ============ */
   function getCart() {
     try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
@@ -20,7 +17,7 @@
   function cartTotal() {
     return getCart().reduce(function (s, it) { return s + it.qty * it.price; }, 0);
   }
-  function money(n) { return '$' + Number(n).toFixed(2); }
+  function money(n) { return '€' + Number(n).toFixed(2); }
 
   // 注入购物车按钮 + 抽屉（全站共享，无需改各页 header）
   function injectCartUI() {
@@ -306,33 +303,80 @@
     }
   }
 
-  // 结算提交：无后端，生成订单号并引导支付
+  // 结算提交：调用 Netlify Function 创建 Stripe Checkout Session 并跳转
   var checkoutForm = document.getElementById('checkout-form');
   if (checkoutForm) {
     checkoutForm.addEventListener('submit', function (e) {
       e.preventDefault();
       var cart = getCart();
       if (!cart.length) { alert(lang === 'zh' ? '购物车是空的' : 'Cart is empty'); return; }
-      var orderNo = 'CS' + Date.now().toString().slice(-8);
-      var total = money(cartTotal());
+
       var done = document.getElementById('checkout-done');
-      var msg = (lang === 'zh'
-        ? '订单 ' + orderNo + ' 已生成，合计 ' + total + '。请完成支付以锁定孤品。'
-        : 'Order ' + orderNo + ' created, total ' + total + '. Complete payment to reserve your piece.');
-      if (done) {
-        done.style.display = 'block';
-        done.textContent = msg;
-      }
-      if (PAYMENT_LINK) {
-        window.open(PAYMENT_LINK + '?order=' + orderNo, '_blank');
-      } else {
+      var btn = checkoutForm.querySelector('button[type="submit"]');
+      var orderNo = 'CS' + Date.now().toString().slice(-8);
+
+      // 价格有效性检查：任一商品无有效价格则提示，不发起支付
+      var invalid = cart.filter(function (it) { return !Number.isFinite(Number(it.price)) || Number(it.price) <= 0; });
+      if (invalid.length) {
         if (done) {
-          done.textContent += (lang === 'zh'
-            ? '（演示模式：支付入口待接入 Stripe）'
-            : ' (Demo: payment link pending Stripe setup)');
+          done.style.display = 'block';
+          done.textContent = (lang === 'zh'
+            ? '部分孤品价格待确认，暂无法在线支付。请通过联系页咨询定价。'
+            : 'Some pieces are awaiting pricing and cannot be paid online yet. Please contact us for a quote.');
         }
+        return;
       }
+
+      if (btn) { btn.disabled = true; btn.textContent = (lang === 'zh' ? '正在跳转支付…' : 'Redirecting to payment…'); }
+
+      var payload = {
+        items: cart.map(function (it) {
+          return { id: it.id, name: it.name, nameEn: it.nameEn, price: it.price, qty: it.qty };
+        }),
+        orderNo: orderNo,
+        origin: window.location.origin
+      };
+
+      fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data && data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error(data && data.error ? data.error : 'Checkout failed');
+        }
+      })
+      .catch(function (err) {
+        if (btn) { btn.disabled = false; btn.textContent = (lang === 'zh' ? '提交订单并支付' : 'Place Order & Pay'); }
+        if (done) {
+          done.style.display = 'block';
+          done.textContent = (lang === 'zh'
+            ? '支付通道暂未接入，请联系我们完成下单。'
+            : 'Payment is not available yet. Please contact us to complete your order.');
+        }
+        console.error('checkout error:', err);
+      });
     });
+
+    // 支付回跳状态提示（success / cancel）
+    var payParam = new URLSearchParams(window.location.search).get('payment');
+    var doneEl = document.getElementById('checkout-done');
+    if (doneEl && payParam) {
+      doneEl.style.display = 'block';
+      if (payParam === 'success') {
+        doneEl.textContent = (lang === 'zh'
+          ? '支付成功！我们会确认库存并与你联系发货。'
+          : 'Payment successful! We will confirm stock and contact you about shipping.');
+      } else if (payParam === 'cancel') {
+        doneEl.textContent = (lang === 'zh'
+          ? '支付已取消，购物车仍为你保留。'
+          : 'Payment cancelled — your cart is still saved.');
+      }
+    }
   }
 
   // 滚动显现（轻量）

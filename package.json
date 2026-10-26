@@ -1,0 +1,9 @@
+{
+  "name": "qingyuan-ceramics",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QINGYUAN wood-fired ceramics — static site + Netlify Functions (Stripe Checkout)",
+  "dependencies": {
+    "stripe": "^16.0.0"
+  }
+}

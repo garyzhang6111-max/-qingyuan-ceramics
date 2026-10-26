@@ -1,0 +1,11 @@
+# Netlify 部署配置：静态站 + Serverless Functions（Stripe Checkout）
+[build]
+  publish = "site"
+  functions = "netlify/functions"
+
+# 环境变量在 Netlify 后台配置，绝不写进仓库：
+#   STRIPE_SECRET_KEY  （sk_test_... / sk_live_...）
+#   STRIPE_WEBHOOK_SECRET （支付回调验签，可选）
+
+[functions]
+  node_bundler = "esbuild"
