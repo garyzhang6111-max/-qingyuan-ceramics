@@ -2,17 +2,16 @@
 // 环境变量 STRIPE_SECRET_KEY 在 Netlify 后台配置
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-// 欧洲常用支付方式（需在 Stripe Dashboard 启用；商户账号须欧洲注册）
-const PAYMENT_METHODS = [
-  'card',         // 信用卡/借记卡（Visa/Mastercard/Amex）
-  'ideal',        // 荷兰 iDEAL
-  'bancontact',   // 比利时 Bancontact
-  'klarna',       // Klarna 先买后付
-  'sofort',       // Sofort 银行转账
-  'sepa_debit',   // SEPA 银行借记
-  'eps',          // 奥地利 EPS
-  'giropay',      // 德国 Giropay
-];
+// 欧洲常用支付方式（需在 Stripe Dashboard 激活；商户账号须欧洲注册）
+// 默认只开 card（信用卡，始终可用）；其他方式需在 Stripe 后台逐个激活后，
+// 通过环境变量 STRIPE_PAYMENT_METHODS（逗号分隔）追加，例如：
+//   STRIPE_PAYMENT_METHODS=card,ideal,bancontact,klarna,sepa_debit
+const DEFAULT_METHODS = ['card'];
+const EXTRA_METHODS = (process.env.STRIPE_PAYMENT_METHODS || '')
+  .split(',')
+  .map(function (s) { return s.trim(); })
+  .filter(Boolean);
+const PAYMENT_METHODS = Array.from(new Set(DEFAULT_METHODS.concat(EXTRA_METHODS)));
 
 exports.handler = async (event) => {
   // 只接受 POST

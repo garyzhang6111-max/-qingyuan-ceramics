@@ -4,6 +4,9 @@ fal_key.txt
 .env*
 .secrets
 
+# ---- 依赖目录（Netlify 部署时自动 npm install）----
+node_modules/
+
 # ---- 大体积源素材（网站成品已在 site/，源图不推）----
 photos-src/
 照片分类/
