@@ -284,6 +284,22 @@ form{display:flex;flex-direction:column;gap:16px}
 .field textarea{min-height:140px;resize:vertical}
 .form-note{font-size:.8rem;color:var(--muted);margin-top:4px}
 
+/* 支付方式展示 */
+.pay-methods{margin-top:22px;padding:18px 20px;border:1px solid var(--line);background:#fbf7f0;border-radius:6px}
+.pay-methods-head{display:flex;align-items:center;gap:8px;color:var(--ink2);font-size:.85rem;letter-spacing:.04em;margin-bottom:14px}
+.pay-methods-head svg{color:var(--accent2);flex-shrink:0}
+.pay-badges{display:flex;flex-wrap:wrap;gap:8px}
+.pay-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--line);background:#fff;border-radius:6px;font-size:.8rem;color:var(--ink);letter-spacing:.02em;white-space:nowrap}
+.pay-badge svg{flex-shrink:0}
+.pay-ideal{color:#cc0066;border-color:#ecc2d6}
+.pay-bancontact{color:#004989;border-color:#b8cfe3}
+.pay-klarna{color:#0f0f0f;border-color:#f2c4d0}
+.pay-sepa{color:#1c6b3c;border-color:#bfdcc7}
+.pay-eps{color:#8a1c22;border-color:#e2b9bb}
+.pay-alipay{color:#1677ff;border-color:#bcd6f7}
+.pay-wechat{color:#07c160;border-color:#b6ecc9}
+.pay-hint{font-size:.76rem;color:var(--muted);margin-top:12px;line-height:1.6}
+
 /* ---------- 购物车 ---------- */
 .cart-btn{display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--line);padding:7px 12px;border-radius:4px;cursor:pointer;color:var(--ink);font-size:.85rem;transition:.2s}
 .cart-btn:hover{border-color:var(--accent)}
