@@ -61,6 +61,9 @@ exports.handler = async (event) => {
       mode: 'payment',
       line_items,
       payment_method_types: PAYMENT_METHODS,
+      payment_method_options: {
+        wechat_pay: { client: 'web' },
+      },
       success_url: `${origin}/checkout.html?payment=success`,
       cancel_url: `${origin}/checkout.html?payment=cancel`,
       metadata: {
