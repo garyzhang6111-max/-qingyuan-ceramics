@@ -4,6 +4,7 @@
   "private": true,
   "description": "QINGYUAN wood-fired ceramics — static site + Netlify Functions (Stripe Checkout)",
   "dependencies": {
-    "stripe": "^16.0.0"
+    "stripe": "^16.0.0",
+    "@netlify/blobs": "^8.0.0"
   }
 }

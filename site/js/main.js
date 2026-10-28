@@ -334,6 +334,7 @@
           return { id: it.id, name: it.name, nameEn: it.nameEn, price: it.price, qty: it.qty };
         }),
         orderNo: orderNo,
+        email: (document.getElementById('checkout-email') || {}).value || '',
         origin: window.location.origin
       };
 

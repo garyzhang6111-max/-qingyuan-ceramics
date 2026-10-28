@@ -64,6 +64,17 @@ exports.handler = async (event) => {
       payment_method_options: {
         wechat_pay: { client: 'web' },
       },
+      // 收集收货地址（发货信息）
+      shipping_address_collection: {
+        allowed_countries: [
+          'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR',
+          'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK',
+          'SI', 'ES', 'SE', 'GB', 'CH', 'NO', 'IS', 'LI', 'MC', 'US', 'CA', 'CN',
+          'JP', 'KR', 'AU', 'NZ', 'SG', 'HK', 'TW', 'MO',
+        ],
+      },
+      // 同时要求客户填邮箱（用于发收据 + 联系）
+      customer_email: body.email || undefined,
       success_url: `${origin}/checkout.html?payment=success`,
       cancel_url: `${origin}/checkout.html?payment=cancel`,
       metadata: {
