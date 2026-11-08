@@ -4,8 +4,17 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // 不在模块顶层初始化 store：本地/构建环境没有 Netlify Blobs 上下文会直接崩溃。
-// 在 handler 内调用 getStore()，Netlify 运行时环境会自动注入 siteID/token。
+// 优先用运行时自动注入的上下文；CLI 部署无上下文时，用环境变量手动注入。
 const { getStore } = require('@netlify/blobs');
+
+function getOrdersStore() {
+  const siteID = process.env.NETLIFY_SITE_ID;
+  const token = process.env.NETLIFY_BLOBS_TOKEN;
+  if (siteID && token) {
+    return getStore({ name: 'orders', siteID, token });
+  }
+  return getStore('orders');
+}
 
 exports.handler = async (event) => {
   const headers = {
@@ -70,8 +79,8 @@ exports.handler = async (event) => {
       }),
     };
 
-    // 落库：以 session_id 为 key（运行时才初始化 store，Netlify 环境自动注入凭据）
-    const orders = getStore('orders');
+    // 落库：以 session_id 为 key（CLI 部署无自动上下文时用环境变量手动注入）
+    const orders = getOrdersStore();
     await orders.setJSON(full.id, record);
 
     return { statusCode: 200, headers, body: JSON.stringify({ received: true, order: record.order_no }) };
