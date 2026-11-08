@@ -158,10 +158,13 @@
     if (l === 'en') {
       if (el.hasAttribute('data-en')) {
         if (!el.hasAttribute('data-zh')) el.setAttribute('data-zh', el.textContent);
-        el.textContent = el.getAttribute('data-en');
+        var ven = el.getAttribute('data-en');
+        // 面包屑等元素 data 值含 HTML（以 '<' 开头）→ 用 innerHTML 渲染链接；否则按纯文本
+        if (ven.indexOf('<') === 0) { el.innerHTML = ven; } else { el.textContent = ven; }
       }
     } else if (el.hasAttribute('data-zh')) {
-      el.textContent = el.getAttribute('data-zh');
+      var vzh = el.getAttribute('data-zh');
+      if (vzh.indexOf('<') === 0) { el.innerHTML = vzh; } else { el.textContent = vzh; }
     }
   }
 
