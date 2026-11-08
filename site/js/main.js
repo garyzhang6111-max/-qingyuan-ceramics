@@ -168,6 +168,8 @@
   function applyLang(l) {
     lang = l;
     document.documentElement.setAttribute('lang', l === 'zh' ? 'zh' : 'en');
+    // 语言已应用：解除加载期隐藏（语言防闪）
+    document.documentElement.classList.remove('early-zh');
     document.body.setAttribute('data-lang', l);
     document.querySelectorAll('[data-en]').forEach(function (el) {
       setText(el, l);

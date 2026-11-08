@@ -114,6 +114,9 @@ def gen(p):
   },
 }, ensure_ascii=False, indent=2)}
 </script>
+<script>(function(){try{if(localStorage.getItem('qingyuan-lang')==='zh'){document.documentElement.setAttribute('lang','zh');document.documentElement.classList.add('early-zh');setTimeout(function(){document.documentElement.classList.remove('early-zh');},1200);}}catch(e){}})();</script>
+<style>html.early-zh body{visibility:hidden}</style>
+<noscript><style>html.early-zh body{visibility:visible}</style></noscript>
 </head>
 <body>
 
