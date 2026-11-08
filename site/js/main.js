@@ -367,8 +367,10 @@
   }
 
   // 结算页：渲染订单摘要（checkout.html）
-  var orderEl = document.getElementById('checkout-summary');
-  if (orderEl) {
+  // 渲染结账页订单摘要（抽成函数，支付成功清空购物车后需重新调用）
+  function renderCheckoutSummary() {
+    var orderEl = document.getElementById('checkout-summary');
+    if (!orderEl) return;
     var cart = getCart();
     if (!cart.length) {
       orderEl.innerHTML = '<p class="cart-empty" data-zh="购物车是空的，先去看看作品吧。" data-en="Your cart is empty — browse the collection first.">购物车是空的，先去看看作品吧。</p>';
@@ -380,6 +382,9 @@
         '<div class="co-total"><span data-zh="合计" data-en="Total">合计</span><strong>' + money(cartTotal()) + '</strong></div>';
     }
   }
+
+  var orderEl = document.getElementById('checkout-summary');
+  if (orderEl) { renderCheckoutSummary(); }
 
   // 结算提交：调用 Netlify Function 创建 Stripe Checkout Session 并跳转
   var checkoutForm = document.getElementById('checkout-form');
@@ -472,9 +477,10 @@
     if (doneEl && payParam) {
       doneEl.style.display = 'block';
       if (payParam === 'success') {
-        // 支付成功：清空购物车（订单已锁定）
+        // 支付成功：清空购物车（订单已锁定）并重新渲染摘要
         saveCart([]);
         renderCart();
+        renderCheckoutSummary();
         doneEl.textContent = (lang === 'zh'
           ? '支付成功！我们会确认库存并与你联系发货。'
           : 'Payment successful! We will confirm stock and contact you about shipping.');
