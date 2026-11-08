@@ -9,7 +9,10 @@ DATA = json.load(open(os.path.join(ROOT, 'data/products.json')))
 CATS = [('守光灯具', 'Light Keeper', 'lamp'), ('马克杯', 'Mugs', 'mug'), ('茶器', 'Tea Ware', 'tea'), ('香炉', 'Incense Burners', 'incense'), ('花器', 'Vases', 'vase'), ('茶盘', 'Tea Trays', 'plate'), ('摆件', 'Sculptures', 'sculpture')]
 
 def price_html(p):
-    return '€' + p['price'].rstrip('0').rstrip('.') if p['price'] else 'Price on request'
+    if not p['price']:
+        return 'Price on request'
+    # 只有含小数点的价格才剥尾零（260.00→260）；整数 260 绝不能剥成 26
+    return '€' + p['price'].rstrip('0').rstrip('.') if '.' in p['price'] else '€' + p['price']
 
 def card(p):
     img = p['images'][0] if p['images'] else 'placeholder.jpg'

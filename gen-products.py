@@ -64,7 +64,7 @@ def gen(p):
                 break
     related_cards = []
     for q in related[:3]:
-        rprice = '€' + q['price'].rstrip('0').rstrip('.') if q['price'] else 'Price on request'
+        rprice = ('€' + q['price'].rstrip('0').rstrip('.') if '.' in q['price'] else '€' + q['price']) if q['price'] else 'Price on request'
         related_cards.append(f'''        <div class="card" data-item data-id="{q["slug"]}" data-cat="{q["filter"]}">
           <div class="ph"><img src="assets/photos/product/{q["images"][0]}" alt="{q["image_alt"]}"></div>
           <div class="card-body">
@@ -114,9 +114,9 @@ def gen(p):
   },
 }, ensure_ascii=False, indent=2)}
 </script>
-<script>(function(){try{if(localStorage.getItem('qingyuan-lang')==='zh'){document.documentElement.setAttribute('lang','zh');document.documentElement.classList.add('early-zh');setTimeout(function(){document.documentElement.classList.remove('early-zh');},1200);}}catch(e){}})();</script>
-<style>html.early-zh body{visibility:hidden}</style>
-<noscript><style>html.early-zh body{visibility:visible}</style></noscript>
+<script>(function(){{try{{if(localStorage.getItem('qingyuan-lang')==='zh'){{document.documentElement.setAttribute('lang','zh');document.documentElement.classList.add('early-zh');setTimeout(function(){{document.documentElement.classList.remove('early-zh');}},1200);}}}}catch(e){{}}}})();</script>
+<style>html.early-zh body{{visibility:hidden}}</style>
+<noscript><style>html.early-zh body{{visibility:visible}}</style></noscript>
 </head>
 <body>
 

@@ -24,9 +24,9 @@ def page(en_title, zh_title, en_h1, zh_h1, en_desc, zh_desc, sections):
 <title data-zh="{zh_title}" data-en="{en_title}">{en_title}</title>
 <meta name="description" data-zh="{zh_desc}" data-en="{en_desc}" content="{en_desc}">
 <link rel="stylesheet" href="../css/style.css">
-<script>(function(){try{if(localStorage.getItem('qingyuan-lang')==='zh'){document.documentElement.setAttribute('lang','zh');document.documentElement.classList.add('early-zh');setTimeout(function(){document.documentElement.classList.remove('early-zh');},1200);}}catch(e){}})();</script>
-<style>html.early-zh body{visibility:hidden}</style>
-<noscript><style>html.early-zh body{visibility:visible}</style></noscript>
+<script>(function(){{try{{if(localStorage.getItem('qingyuan-lang')==='zh'){{document.documentElement.setAttribute('lang','zh');document.documentElement.classList.add('early-zh');setTimeout(function(){{document.documentElement.classList.remove('early-zh');}},1200);}}}}catch(e){{}}}})();</script>
+<style>html.early-zh body{{visibility:hidden}}</style>
+<noscript><style>html.early-zh body{{visibility:visible}}</style></noscript>
 </head>
 <body>
 

@@ -24,7 +24,7 @@ SLUGS = [
 prods = {p['slug']: p for p in DATA['products']}
 
 def price_html(p):
-    return '€' + p['price'].rstrip('0').rstrip('.') if p['price'] else 'Price on request'
+    return '€' + p['price'].rstrip('0').rstrip('.') if '.' in p['price'] else '€' + p['price']
 
 def card(p):
     img = p['images'][0] if p['images'] else 'placeholder.jpg'
