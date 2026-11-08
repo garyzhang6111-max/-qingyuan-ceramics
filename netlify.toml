@@ -9,3 +9,5 @@
 
 [functions]
   node_bundler = "esbuild"
+  # @netlify/blobs 不能进 esbuild 打包（已知问题），需排除后在运行时加载
+  external_node_modules = ["@netlify/blobs"]

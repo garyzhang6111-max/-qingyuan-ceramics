@@ -2,9 +2,10 @@
 // 监听 checkout.session.completed，把订单（含收货地址）写入 Netlify Blobs
 // 环境变量：STRIPE_SECRET_KEY、STRIPE_WEBHOOK_SECRET（都在 Netlify 后台配置）
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { getStore } = require('@netlify/blobs');
 
-const orders = getStore('orders');
+// 不在模块顶层初始化 store：本地/构建环境没有 Netlify Blobs 上下文会直接崩溃。
+// 在 handler 内调用 getStore()，Netlify 运行时环境会自动注入 siteID/token。
+const { getStore } = require('@netlify/blobs');
 
 exports.handler = async (event) => {
   const headers = {
@@ -67,7 +68,8 @@ exports.handler = async (event) => {
       }),
     };
 
-    // 落库：以 session_id 为 key
+    // 落库：以 session_id 为 key（运行时才初始化 store，Netlify 环境自动注入凭据）
+    const orders = getStore('orders');
     await orders.setJSON(full.id, record);
 
     return { statusCode: 200, headers, body: JSON.stringify({ received: true, order: record.order_no }) };
