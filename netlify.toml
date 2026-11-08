@@ -3,6 +3,9 @@
   publish = "site"
   functions = "netlify/functions"
 
+[build.environment]
+  NODE_VERSION = "20"
+
 # 环境变量在 Netlify 后台配置，绝不写进仓库：
 #   STRIPE_SECRET_KEY  （sk_test_... / sk_live_...）
 #   STRIPE_WEBHOOK_SECRET （支付回调验签，可选）
