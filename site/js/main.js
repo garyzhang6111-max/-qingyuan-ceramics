@@ -233,7 +233,7 @@
         '<span class="ab-item-text">' + label + '</span>' +
         '<span class="ab-item-actions">' +
           '<span class="ab-use">' + (lang === 'zh' ? '使用' : 'Use') + '</span>' +
-          '<span class="ab-del" data-ab-del="' + i + '" title="' + (lang === 'zh' ? '删除' : 'Delete') + '">×</span>' +
+          '<span class="ab-del" data-ab-del="' + i + '" role="button" tabindex="0" aria-label="' + (lang === 'zh' ? '删除此地址' : 'Delete this address') + '">×</span>' +
         '</span>' +
       '</button>';
     }).join('');
