@@ -26,8 +26,8 @@
       var btn = document.createElement('button');
       btn.className = 'cart-btn';
       btn.id = 'cart-btn';
-      btn.setAttribute('data-zh', '购物车');
-      btn.setAttribute('data-en', 'Cart');
+      // aria-label 动态更新（不设 data-zh/data-en，避免 applyLang 覆盖图标与数量角标）
+      btn.setAttribute('aria-label', lang === 'zh' ? '购物车' : 'Cart');
       btn.innerHTML = '<span class="cart-ic">🛒</span><span class="cart-count" id="cart-count">0</span>';
       // 插到语言切换之前
       var langSwitch = navRight.querySelector('.lang-switch');
@@ -178,7 +178,10 @@
       b.classList.toggle('active', b.getAttribute('data-lang') === l);
     });
     localStorage.setItem(LANG_KEY, l);
+    var cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) cartBtn.setAttribute('aria-label', l === 'zh' ? '购物车' : 'Cart');
     renderCart();
+    renderAddressBook();
   }
 
   langBtns.forEach(function (b) {
@@ -187,11 +190,86 @@
     });
   });
 
+  /* ============ 地址簿（多地址保存 / 切换 / 删除）============ */
+  var ADDR_KEY = 'qingyuan-addresses';
+
+  function getAddresses() {
+    try { return JSON.parse(localStorage.getItem(ADDR_KEY)) || []; }
+    catch (e) { return []; }
+  }
+  function saveAddresses(list) { localStorage.setItem(ADDR_KEY, JSON.stringify(list)); }
+
+  // 把表单当前值组装成地址对象
+  function readAddressForm() {
+    return {
+      id: 'addr-' + Date.now(),
+      name: (document.getElementById('ship-name') || {}).value || '',
+      phone: (document.getElementById('ship-phone') || {}).value || '',
+      country: (document.getElementById('ship-country') || {}).value || '',
+      line1: (document.getElementById('ship-line1') || {}).value || '',
+      line2: (document.getElementById('ship-line2') || {}).value || '',
+      city: (document.getElementById('ship-city') || {}).value || '',
+      postal: (document.getElementById('ship-postal') || {}).value || ''
+    };
+  }
+
+  // 把地址对象填入表单
+  function fillAddressForm(a) {
+    function set(id, v) { var el = document.getElementById(id); if (el) el.value = v || ''; }
+    set('ship-name', a.name); set('ship-phone', a.phone); set('ship-country', a.country);
+    set('ship-line1', a.line1); set('ship-line2', a.line2); set('ship-city', a.city); set('ship-postal', a.postal);
+  }
+
+  function renderAddressBook() {
+    var book = document.getElementById('address-book');
+    var list = document.getElementById('address-list');
+    if (!book || !list) return;
+    var addrs = getAddresses();
+    if (!addrs.length) { book.style.display = 'none'; return; }
+    book.style.display = 'block';
+    list.innerHTML = addrs.map(function (a, i) {
+      var label = a.name + ' · ' + a.city + ' ' + a.line1 + (a.line2 ? ' ' + a.line2 : '');
+      return '<button type="button" class="ab-item" data-ab-use="' + i + '">' +
+        '<span class="ab-item-text">' + label + '</span>' +
+        '<span class="ab-item-actions">' +
+          '<span class="ab-use">' + (lang === 'zh' ? '使用' : 'Use') + '</span>' +
+          '<span class="ab-del" data-ab-del="' + i + '" title="' + (lang === 'zh' ? '删除' : 'Delete') + '">×</span>' +
+        '</span>' +
+      '</button>';
+    }).join('');
+  }
+
+  function initAddressBook() {
+    var book = document.getElementById('address-book');
+    if (!book) return;
+    renderAddressBook();
+    book.addEventListener('click', function (e) {
+      var del = e.target.closest('[data-ab-del]');
+      if (del) {
+        e.preventDefault(); e.stopPropagation();
+        var i = parseInt(del.getAttribute('data-ab-del'), 10);
+        var addrs = getAddresses();
+        addrs.splice(i, 1);
+        saveAddresses(addrs);
+        renderAddressBook();
+        return;
+      }
+      var use = e.target.closest('[data-ab-use]');
+      if (use) {
+        var j = parseInt(use.getAttribute('data-ab-use'), 10);
+        var list = getAddresses();
+        if (list[j]) fillAddressForm(list[j]);
+        return;
+      }
+    });
+  }
+
   /* ============ 初始化顺序 ============ */
   injectCartUI();
   initCartEvents();
   applyLang(lang);
   renderCart();
+  initAddressBook();
 
   // 移动端菜单
   var burger = document.getElementById('burger');
@@ -329,12 +407,37 @@
 
       if (btn) { btn.disabled = true; btn.textContent = (lang === 'zh' ? '正在跳转支付…' : 'Redirecting to payment…'); }
 
+      // 保存地址到地址簿（勾选了「保存此地址」且非空）
+      var saveAddr = document.getElementById('save-address');
+      if (saveAddr && saveAddr.checked) {
+        var a = readAddressForm();
+        if (a.name && a.line1 && a.city) {
+          var addrs = getAddresses();
+          // 去重：与已存地址完全相同则不重复保存
+          var dup = addrs.some(function (x) {
+            return x.name === a.name && x.line1 === a.line1 && x.city === a.city && x.country === a.country;
+          });
+          if (!dup) { addrs.unshift(a); saveAddresses(addrs.slice(0, 8)); }
+          renderAddressBook();
+        }
+      }
+
       var payload = {
         items: cart.map(function (it) {
           return { id: it.id, name: it.name, nameEn: it.nameEn, price: it.price, qty: it.qty };
         }),
         orderNo: orderNo,
         email: (document.getElementById('checkout-email') || {}).value || '',
+        // 结构化收货信息：直接传给 Stripe，客户在结账页只确认不重填
+        shipping: {
+          name: (document.getElementById('ship-name') || {}).value || '',
+          phone: (document.getElementById('ship-phone') || {}).value || '',
+          country: (document.getElementById('ship-country') || {}).value || '',
+          line1: (document.getElementById('ship-line1') || {}).value || '',
+          line2: (document.getElementById('ship-line2') || {}).value || '',
+          city: (document.getElementById('ship-city') || {}).value || '',
+          postal: (document.getElementById('ship-postal') || {}).value || ''
+        },
         origin: window.location.origin
       };
 
@@ -369,6 +472,9 @@
     if (doneEl && payParam) {
       doneEl.style.display = 'block';
       if (payParam === 'success') {
+        // 支付成功：清空购物车（订单已锁定）
+        saveCart([]);
+        renderCart();
         doneEl.textContent = (lang === 'zh'
           ? '支付成功！我们会确认库存并与你联系发货。'
           : 'Payment successful! We will confirm stock and contact you about shipping.');

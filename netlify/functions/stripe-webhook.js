@@ -53,6 +53,22 @@ exports.handler = async (event) => {
       expand: ['line_items', 'line_items.data.price.product'],
     });
 
+    // 收货地址优先级：站内表单填的（metadata.shipping_json）> Stripe 页收集的（shipping_details）
+    var shipping = null;
+    if (full.metadata && full.metadata.shipping_json) {
+      try {
+        var sj = JSON.parse(full.metadata.shipping_json);
+        shipping = { name: sj.name || '', phone: sj.phone || '', address: sj };
+      } catch (e) { shipping = null; }
+    }
+    if (!shipping && full.shipping_details) {
+      shipping = {
+        name: full.shipping_details.name,
+        phone: full.shipping_details.phone,
+        address: full.shipping_details.address,
+      };
+    }
+
     // 组装订单记录
     const record = {
       order_no: full.metadata && full.metadata.order ? full.metadata.order : '',
@@ -63,11 +79,7 @@ exports.handler = async (event) => {
       payment_status: full.payment_status,
       customer_email: full.customer_details ? full.customer_details.email : (full.customer_email || ''),
       customer_name: full.customer_details ? full.customer_details.name : '',
-      shipping: full.shipping_details ? {
-        name: full.shipping_details.name,
-        phone: full.shipping_details.phone,
-        address: full.shipping_details.address,
-      } : null,
+      shipping: shipping,
       items: (full.line_items && full.line_items.data || []).map(function (li) {
         return {
           name: li.description

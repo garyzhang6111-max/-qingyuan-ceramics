@@ -57,6 +57,13 @@ exports.handler = async (event) => {
       };
     });
 
+    // 站内表单已收集完整收货地址 → 不再让 Stripe 页重复收集（避免双重填写）
+    // Stripe Checkout 不支持直接预填收货表单，因此地址走两条正规通道：
+    //   1) payment_intent_data.shipping —— 地址挂在 PaymentIntent 上，Stripe Dashboard 可见
+    //   2) metadata.shipping_json —— 订单元数据，webhook 落库时解析
+    const shipping = body.shipping || null;
+    const hasFullShipping = shipping && shipping.name && shipping.line1 && shipping.city && shipping.country;
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items,
@@ -64,8 +71,9 @@ exports.handler = async (event) => {
       payment_method_options: {
         wechat_pay: { client: 'web' },
       },
-      // 收集收货地址（发货信息）
-      shipping_address_collection: {
+      // 地址已由站内表单收集：关闭 Stripe 页地址收集（客户只付款不重填）
+      // 地址缺失时才退回 Stripe 收集，保证实体发货总有地址
+      shipping_address_collection: hasFullShipping ? undefined : {
         allowed_countries: [
           'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR',
           'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK',
@@ -73,12 +81,34 @@ exports.handler = async (event) => {
           'JP', 'KR', 'AU', 'NZ', 'SG', 'HK', 'TW', 'MO',
         ],
       },
+      payment_intent_data: hasFullShipping ? {
+        shipping: {
+          name: shipping.name,
+          phone: shipping.phone || undefined,
+          address: {
+            line1: shipping.line1,
+            line2: shipping.line2 || undefined,
+            city: shipping.city,
+            postal_code: shipping.postal || undefined,
+            country: shipping.country,
+          },
+        },
+      } : undefined,
       // 同时要求客户填邮箱（用于发收据 + 联系）
       customer_email: body.email || undefined,
       success_url: `${origin}/checkout.html?payment=success`,
       cancel_url: `${origin}/checkout.html?payment=cancel`,
       metadata: {
         order: body.orderNo || '',
+        shipping_json: hasFullShipping ? JSON.stringify({
+          name: shipping.name,
+          phone: shipping.phone || '',
+          line1: shipping.line1,
+          line2: shipping.line2 || '',
+          city: shipping.city,
+          postal: shipping.postal || '',
+          country: shipping.country,
+        }) : '',
       },
     });
 

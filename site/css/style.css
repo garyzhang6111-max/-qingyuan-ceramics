@@ -335,6 +335,21 @@ form{display:flex;flex-direction:column;gap:16px}
 .co-total strong{font-family:var(--serif);font-size:1.35rem}
 .co-done{margin-top:18px;padding:14px 16px;background:var(--bg2);border:1px solid var(--accent2);color:var(--ink);font-size:.9rem;border-radius:4px}
 
+/* ---------- 地址簿 ---------- */
+.address-book{margin-bottom:18px;border:1px solid var(--line);border-radius:4px;background:#fbf7f0;padding:14px 16px}
+.ab-head{font-size:.82rem;letter-spacing:.1em;color:var(--ink2);margin-bottom:10px}
+.address-list{display:flex;flex-direction:column;gap:8px}
+.ab-item{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border:1px solid var(--line);background:#fff;border-radius:4px;cursor:pointer;transition:.2s;font-family:var(--sans)}
+.ab-item:hover{border-color:var(--accent2)}
+.ab-item-text{font-size:.86rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ab-item-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ab-use{font-size:.78rem;color:var(--accent2);letter-spacing:.05em}
+.ab-del{font-size:1.05rem;color:var(--muted);padding:0 4px;line-height:1}
+.ab-del:hover{color:#ad5f47}
+.ab-save{display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--ink2);margin:6px 0 14px;cursor:pointer;user-select:none}
+.ab-save input{accent-color:var(--accent2)}
+.co-city-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
 /* ---------- Footer ---------- */
 footer{background:var(--dark2);color:#b7a88c;padding:64px 0 40px;font-size:.88rem}
 .foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
