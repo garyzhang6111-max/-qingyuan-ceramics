@@ -39,9 +39,9 @@ exports.handler = async (event) => {
   const session = stripeEvent.data.object;
 
   try {
-    // 拉取完整 session（含 line_items 明细）
+    // 拉取完整 session（两层 expand：line_items 及其产品名）
     const full = await stripe.checkout.sessions.retrieve(session.id, {
-      expand: ['line_items'],
+      expand: ['line_items', 'line_items.data.price.product'],
     });
 
     // 组装订单记录
@@ -61,7 +61,9 @@ exports.handler = async (event) => {
       } : null,
       items: (full.line_items && full.line_items.data || []).map(function (li) {
         return {
-          name: li.description || (li.price && li.price.product ? '' : ''),
+          name: li.description
+            || (li.price && li.price.product && li.price.product.name)
+            || 'Item',
           quantity: li.quantity,
           amount_total: li.amount_total,
         };
