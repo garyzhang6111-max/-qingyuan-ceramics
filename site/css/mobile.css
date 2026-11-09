@@ -4,6 +4,7 @@
   --clay:#b98a5f; --line:#e3dacb; --dark:#262019; --bg2:#efe9df;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none !important}
 html,body{height:100%}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC","Segoe UI",sans-serif;
