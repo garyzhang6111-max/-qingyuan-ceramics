@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方案C · 白釉 · 极简留白</title>
+<style>
+  :root{
+    --bg:#faf8f4; --card:#ffffff; --ink:#23201b; --muted:#98907f;
+    --clay:#a4794f; --line:#eceae4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:#e9e6df;color:var(--ink);width:390px;height:844px;margin:0 auto;overflow:hidden;position:relative;box-shadow:0 0 60px rgba(0,0,0,.18)}
+  /* 首页：主打单品全屏 + 底部缩略条 */
+  .home{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg)}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:15px 20px 10px}
+  .brand{font-family:Georgia,"Songti SC",serif;font-size:19px;letter-spacing:.22em}
+  .top button{background:none;border:none;font-size:17px;cursor:pointer;position:relative}
+  .badge{position:absolute;top:-6px;right:-8px;background:var(--clay);color:#fff;font-size:10px;border-radius:8px;padding:1px 5px}
+  .main-ph{flex:1;margin:8px 16px 0;border-radius:14px;overflow:hidden;background:#efece5;position:relative}
+  .main-ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .main-ph .note{position:absolute;left:14px;top:14px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);font-size:10.5px;letter-spacing:.2em;color:var(--clay);padding:5px 10px;border-radius:12px}
+  .thumbs{display:flex;gap:8px;padding:10px 16px;overflow-x:auto}
+  .thumb{width:64px;height:72px;border-radius:9px;overflow:hidden;flex-shrink:0;border:2px solid transparent;cursor:pointer;background:#efece5}
+  .thumb.on{border-color:var(--clay)}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .name-row{display:flex;align-items:baseline;justify-content:space-between;padding:6px 20px 2px}
+  .name-row h1{font-family:Georgia,"Songti SC",serif;font-size:23px;letter-spacing:.02em}
+  .name-row .price{font-size:17px;color:var(--clay);font-weight:600}
+  .sub{padding:2px 20px 0;font-size:12px;color:var(--muted);letter-spacing:.06em}
+  /* 底部操作条 */
+  .actbar{display:flex;gap:10px;padding:12px 16px 18px}
+  .actbar button{height:48px;border-radius:24px;border:none;cursor:pointer;font-size:14px}
+  .a-list{width:48px;background:#fff;border:1px solid var(--line);font-size:17px}
+  .a-buy{flex:1;background:var(--ink);color:#f7f3ec;letter-spacing:.12em;font-weight:600}
+  /* 浏览列表页（上滑一层） */
+  .list{position:absolute;inset:0;background:var(--bg);transform:translateY(100%);transition:.35s;display:flex;flex-direction:column;z-index:10}
+  .list.on{transform:translateY(0)}
+  .lhead{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;border-bottom:1px solid var(--line)}
+  .lhead h2{font-family:Georgia,"Songti SC",serif;font-size:17px;letter-spacing:.08em}
+  .lhead button{background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted)}
+  .lrows{flex:1;overflow-y:auto}
+  .lrow{display:flex;gap:14px;align-items:center;padding:12px 20px;border-bottom:1px solid var(--line);cursor:pointer;background:var(--card)}
+  .lrow img{width:74px;height:84px;border-radius:8px;object-fit:cover;background:#efece5}
+  .lrow .t{flex:1}
+  .lrow h3{font-size:14px;font-weight:600}
+  .lrow .c{font-size:11.5px;color:var(--muted);margin-top:3px;letter-spacing:.04em}
+  .lrow .p{font-size:14px;color:var(--clay);font-weight:600;align-self:flex-end;padding-bottom:2px}
+  .lrow .arr{color:#cfc9bd;font-size:16px}
+  /* 下单页 */
+  .order{position:absolute;inset:0;background:var(--bg);transform:translateY(100%);transition:.35s;display:flex;flex-direction:column;z-index:20}
+  .order.on{transform:translateY(0)}
+  .ohead{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .ohead button{background:none;border:none;font-size:20px;cursor:pointer;margin-right:8px}
+  .ohead h2{font-family:Georgia,"Songti SC",serif;font-size:16px;letter-spacing:.06em;flex:1;text-align:center}
+  .obody{flex:1;overflow-y:auto;padding:16px 20px}
+  .ofield{margin-bottom:16px}
+  .ofield label{display:block;font-size:12px;color:var(--muted);letter-spacing:.08em;margin-bottom:6px}
+  .ofield input{width:100%;height:44px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 14px;font-size:14px;outline:none}
+  .ofield input:focus{border-color:var(--clay)}
+  .orow{display:flex;gap:10px}
+  .orow .ofield{flex:1}
+  .oaddr{margin-bottom:16px}
+  .oaddr label{display:block;font-size:12px;color:var(--muted);letter-spacing:.08em;margin-bottom:6px}
+  .oaddr .box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.6;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+  .oaddr .box small{display:block;color:var(--muted);font-size:11.5px}
+  .osummary{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}
+  .osummary .li{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:4px 0}
+  .osummary .li b{color:var(--ink);font-weight:600}
+  .osummary .tt{display:flex;justify-content:space-between;font-size:16px;font-weight:700;border-top:1px solid var(--line);margin-top:8px;padding-top:10px}
+  .osummary .tt b{color:var(--clay)}
+  .ofoot{padding:12px 20px 20px;border-top:1px solid var(--line);background:var(--bg)}
+  .ofoot button{width:100%;height:50px;border-radius:25px;border:none;background:var(--ink);color:#f7f3ec;font-size:15px;letter-spacing:.1em;font-weight:600;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- 首页 -->
+<div class="home">
+  <div class="top">
+    <div class="brand">清 原</div>
+    <button onclick="toast('购物袋 · 2 件')">🛍️<span class="badge">2</span></button>
+  </div>
+  <div class="main-ph">
+    <img id="main-img" src="https://qingyunchai.netlify.app/assets/photos/product/lamp-blue-gray/lamp-blue-gray-1.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22360%22 height=%22400%22%3E%3Crect fill=%22%23b98a5f%22 width=%22360%22 height=%22400%22/%3E%3C/svg%3E'">
+    <span class="note">柴 烧 · 孤 品</span>
+  </div>
+  <div class="thumbs" id="thumbs">
+    <div class="thumb on"><img src="https://qingyunchai.netlify.app/assets/photos/product/lamp-blue-gray/lamp-blue-gray-1.jpg" onerror="this.style.display='none'"></div>
+    <div class="thumb"><img src="https://qingyunchai.netlify.app/assets/photos/product/lamp-bicolor/lamp-bicolor-1.jpg" onerror="this.style.display='none'"></div>
+    <div class="thumb"><img src="https://qingyunchai.netlify.app/assets/photos/product/lamp-amber/lamp-amber-1.jpg" onerror="this.style.display='none'"></div>
+  </div>
+  <div class="name-row">
+    <h1 id="home-name">守光 · 罐形 · 深青灰</h1>
+    <div class="price">€260</div>
+  </div>
+  <div class="sub">木火落灰成釉 · 世间唯一 · 售出即无</div>
+  <div class="actbar">
+    <button class="a-list" onclick="openList()" title="浏览全部">☰</button>
+    <button class="a-buy" onclick="openOrder()">立即购买</button>
+  </div>
+</div>
+
+<!-- 浏览列表 -->
+<div class="list" id="list">
+  <div class="lhead"><h2>全部作品 · 95 件孤品</h2><button onclick="closeList()">✕</button></div>
+  <div class="lrows">
+    <div class="lrow" onclick="pick('守光 · 罐形 · 深青灰','€260')"><img src="https://qingyunchai.netlify.app/assets/photos/product/lamp-blue-gray/lamp-blue-gray-1.jpg" onerror="this.style.display='none'"><div class="t"><h3>守光 · 罐形 · 深青灰</h3><div class="c">柴烧台灯 · 深青灰釉</div></div><div class="p">€260</div><div class="arr">›</div></div>
+    <div class="lrow" onclick="pick('守光 · 球体 · 陨石坑','€260')"><img src="https://qingyunchai.netlify.app/assets/photos/product/lamp-bicolor-sphere/lamp-bicolor-sphere-1.jpg" onerror="this.style.display='none'"><div class="t"><h3>守光 · 球体 · 陨石坑</h3><div class="c">柴烧台灯 · 双色釉</div></div><div class="p">€260</div><div class="arr">›</div></div>
+    <div class="lrow" onclick="pick('马克杯 · 熔岩','€38')"><img src="https://qingyunchai.netlify.app/assets/photos/product/mug-lava/mug-lava-1.jpg" onerror="this.style.display='none'"><div class="t"><h3>马克杯 · 熔岩</h3><div class="c">柴烧马克杯 · 火山灰</div></div><div class="p">€38</div><div class="arr">›</div></div>
+    <div class="lrow" onclick="pick('盖碗 · 乳白','€66')"><img src="https://qingyunchai.netlify.app/assets/photos/product/fairness-cup-cream/fairness-cup-cream-1.jpg" onerror="this.style.display='none'"><div class="t"><h3>盖碗 · 乳白</h3><div class="c">柴烧茶器 · 乳白釉</div></div><div class="p">€66</div><div class="arr">›</div></div>
+    <div class="lrow" onclick="pick('香炉 · 琥珀','€66')"><img src="https://qingyunchai.netlify.app/assets/photos/product/incense-amber/incense-amber-1.jpg" onerror="this.style.display='none'"><div class="t"><h3>香炉 · 琥珀</h3><div class="c">柴烧香炉 · 琥珀落灰</div></div><div class="p">€66</div><div class="arr">›</div></div>
+    <div class="lrow" onclick="pick('茶盘 · 长条','€38')"><img src="https://qingyunchai.netlify.app/assets/photos/product/incense-tray-long/incense-tray-long-1.jpg" onerror="this.style.display='none'"><div class="t"><h3>茶盘 · 长条</h3><div class="c">柴烧茶器 · 深灰</div></div><div class="p">€38</div><div class="arr">›</div></div>
+  </div>
+</div>
+
+<!-- 下单页 -->
+<div class="order" id="order">
+  <div class="ohead"><button onclick="closeOrder()">←</button><h2>确认下单</h2></div>
+  <div class="obody">
+    <div class="osummary">
+      <div class="li"><span id="o-name">守光 · 罐形 · 深青灰</span><b id="o-price">€260</b></div>
+      <div class="li"><span>全球包邮（满 €200）· 关税 DDP</span><b>免费</b></div>
+      <div class="tt"><span>合计</span><b id="o-total">€260</b></div>
+    </div>
+    <div style="height:16px"></div>
+    <div class="oaddr">
+      <label>收货地址（已保存，点击切换）</label>
+      <div class="box" onclick="toast('地址簿：已存 2 个地址')">
+        <div>📍 Maria Silva<small>Rua Augusta 100, 3 Andar, Lisboa, PT</small></div>
+        <span>›</span>
+      </div>
+    </div>
+    <div class="ofield">
+      <label>邮箱（收据）</label>
+      <input type="email" value="maria@example.com">
+    </div>
+    <div class="orow">
+      <div class="ofield"><label>姓名</label><input value="Maria Silva"></div>
+      <div class="ofield"><label>电话（可选）</label><input value="+351 912 345 678"></div>
+    </div>
+  </div>
+  <div class="ofoot"><button onclick="toast('✅ 跳转安全支付（原型演示）')">支付 €260 · 孤品付款即锁定</button></div>
+</div>
+
+<script>
+  function openList(){ document.getElementById('list').classList.add('on'); }
+  function closeList(){ document.getElementById('list').classList.remove('on'); }
+  function openOrder(){ document.getElementById('order').classList.add('on'); }
+  function closeOrder(){ document.getElementById('order').classList.remove('on'); }
+  function pick(name, price){
+    document.getElementById('home-name').textContent = name;
+    document.getElementById('o-name').textContent = name;
+    document.getElementById('o-price').textContent = price;
+    document.getElementById('o-total').textContent = price;
+    document.getElementById('list').classList.remove('on');
+  }
+  function toast(msg){
+    var t = document.createElement('div');
+    t.textContent = msg;
+    t.style.cssText = 'position:absolute;left:50%;bottom:100px;transform:translateX(-50%);background:rgba(35,32,27,.94);color:#f7f3ec;padding:10px 18px;border-radius:20px;font-size:13px;z-index:99';
+    document.body.appendChild(t);
+    setTimeout(function(){ t.style.opacity='0'; }, 1400);
+    setTimeout(function(){ t.remove(); }, 1900);
+  }
+</script>
+</body>
+</html>

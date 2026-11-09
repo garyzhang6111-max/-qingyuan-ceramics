@@ -35,6 +35,10 @@ exports.handler = async (event) => {
     const items = body.items || [];
     const origin = body.origin || 'https://www.qingyuan-ceramics.com';
 
+    // 回跳路径白名单（只允许本站两个结账相关页，防止开放重定向）
+    const ALLOWED_RETURN_PATHS = ['/checkout.html', '/mobile.html'];
+    const returnPath = ALLOWED_RETURN_PATHS.indexOf(body.returnPath) > -1 ? body.returnPath : '/checkout.html';
+
     if (!items.length) {
       return { statusCode: 400, headers, body: JSON.stringify({ error: 'No items in order' }) };
     }
@@ -96,8 +100,8 @@ exports.handler = async (event) => {
       } : undefined,
       // 同时要求客户填邮箱（用于发收据 + 联系）
       customer_email: body.email || undefined,
-      success_url: `${origin}/checkout.html?payment=success`,
-      cancel_url: `${origin}/checkout.html?payment=cancel`,
+      success_url: `${origin}${returnPath}?payment=success`,
+      cancel_url: `${origin}${returnPath}?payment=cancel`,
       metadata: {
         order: body.orderNo || '',
         shipping_json: hasFullShipping ? JSON.stringify({
