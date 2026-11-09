@@ -404,3 +404,6 @@ footer{background:var(--dark2);color:#b7a88c;padding:64px 0 40px;font-size:.88re
   .sec-head{margin-bottom:36px}
   .foot{grid-template-columns:1fr 1fr;gap:28px}
 }
+/* 隐藏 Netlify 免费套餐强制注入的徽章 */
+iframe[title="Powered by Netlify"], iframe[title="Netlify"] { display: none !important; }
+

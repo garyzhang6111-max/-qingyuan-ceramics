@@ -127,3 +127,6 @@ body{
 /* toast */
 .toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%) translateY(10px);background:rgba(38,32,25,.93);color:#f3ecdf;padding:10px 20px;border-radius:20px;font-size:13px;z-index:99;opacity:0;pointer-events:none;transition:.25s;max-width:82vw;text-align:center}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+/* 隐藏 Netlify 免费套餐强制注入的徽章（遮挡移动端按钮） */
+iframe[title="Powered by Netlify"], iframe[title="Netlify"] { display: none !important; }
+

@@ -420,3 +420,13 @@
   }
   init();
 })();
+
+/* Netlify 免费套餐强制徽章：JS 兜底移除（CSS 隐藏 + 定时清理双保险） */
+(function hideNetlifyBadge(){
+  function sweep(){
+    var frames = document.querySelectorAll('iframe[title="Powered by Netlify"], iframe[title="Netlify"], #nl-badge-frame, #nl-hud-frame');
+    Array.prototype.forEach.call(frames, function (f) { f.remove(); });
+  }
+  var n = 0;
+  var t = setInterval(function () { sweep(); if (++n > 10) clearInterval(t); }, 600);
+})();
