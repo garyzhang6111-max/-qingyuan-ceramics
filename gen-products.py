@@ -145,7 +145,6 @@ def gen(p):
 <main>
   <section class="pd">
     <div class="wrap">
-      <div class="crumb" style="margin-bottom:20px" data-zh="<a href='index.html'>首页</a> / <a href='shop.html'>商店</a> / {name_zh}" data-en="<a href='index.html'>Home</a> / <a href='shop.html'>Shop</a> / {name_en}"><a href="index.html">Home</a> / <a href="shop.html">Shop</a> / {name_en}</div>
       <div class="pd-grid">
         <div class="pd-gallery">
           <div class="ph main"><img src="assets/photos/product/{main}" alt="{alt}"></div>

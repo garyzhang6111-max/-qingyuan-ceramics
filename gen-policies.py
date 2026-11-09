@@ -53,16 +53,7 @@ def page(en_title, zh_title, en_h1, zh_h1, en_desc, zh_desc, sections):
 </header>
 
 <main>
-  <section class="page-hero">
-    <div class="ph ph-craft"><img src="../assets/photos/craft/kiln-8.jpg" alt="柴烧窑火"></div>
-    <div class="wrap">
-      <div class="crumb" data-zh="<a href='../index.html'>首页</a> / {zh_title}" data-en="<a href='../index.html'>Home</a> / {en_title}"><a href="../index.html">Home</a> / {en_title}</div>
-      <div class="kicker" data-zh="政策" data-en="Policy">Policy</div>
-      <h1 data-zh="{zh_h1}" data-en="{en_h1}">{en_h1}</h1>
-    </div>
-  </section>
-
-  <section class="values">
+<section class="values">
     <div class="wrap">
       <div class="vals">
 {chr(10).join(sec_html)}
